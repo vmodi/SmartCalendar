@@ -61,8 +61,6 @@ NSString *kCellID = @"calendarGridCellID";
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    // we're going to use a custom UICollectionViewCell, which will hold an image and its label
-    //
     UICalendarDateViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellID forIndexPath:indexPath];
     
     int dateNumber = [[(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row] dateInformation].day;
@@ -76,16 +74,11 @@ NSString *kCellID = @"calendarGridCellID";
     if(indexPath.row == 0 || indexPath.row == [self collectionView:collectionView numberOfItemsInSection:indexPath.section] - 1){
         NSDate *selectedDate = [(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row];
         self.datesArray = [DateHelper getMonthGridDatesForDate:selectedDate];
-        [collectionView reloadData];
-//        [collectionView performBatchUpdates:^{
-//            NSMutableArray *arrayWithIndexPaths = [NSMutableArray array];
-//            for( int i = 0; i < [adjecentMonth count]; i++ ) {
-//                [arrayWithIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-//            }
-//            [collectionView insertItemsAtIndexPaths:arrayWithIndexPaths];
-//        } completion:^(BOOL finished) {}];
-
-
+        UIViewAnimationOptions animationOption = indexPath.row == 0 ? UIViewAnimationOptionTransitionCurlDown : UIViewAnimationOptionTransitionCurlUp;
+        [UIView transitionWithView:collectionView duration:1.0 options:animationOption animations:^{
+            [collectionView reloadData];            
+        } completion:^(BOOL finished) {
+        }];
     }
     
 }
