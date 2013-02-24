@@ -78,6 +78,7 @@ NSString *kCellID = @"calendarGridCellID";
         [UIView transitionWithView:collectionView duration:1.0 options:animationOption animations:^{
             [collectionView reloadData];            
         } completion:^(BOOL finished) {
+            [collectionView sizeToFit];
         }];
     }
     
