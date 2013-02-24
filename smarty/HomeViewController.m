@@ -52,11 +52,24 @@ NSString *kCellID = @"calendarGridCellID";
 
 
 
-#pragma - collectionview data source delegate methods
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+#pragma - private methods
+- (NSInteger)daysInMonthGrid {
     NSDate *startDate = [self.datesArray objectAtIndex:0];
     NSDate *endDate = [self.datesArray objectAtIndex:1];
     return [startDate daysBetweenDate:endDate] + 1;
+}
+
+- (void)adjustFrameForCollectionView:(UICollectionView *)collectionView withCell:(UICollectionViewCell *)collectionViewCell {
+    int cellHeight = collectionViewCell.frame.size.height;
+    int rowsInCollectionView = [self daysInMonthGrid] / 7;
+    CGRect collectionViwFrame = collectionView.frame;
+    collectionViwFrame.size.height = cellHeight * rowsInCollectionView;
+    [collectionView setFrame:collectionViwFrame];
+}
+
+#pragma - collectionview data source delegate methods
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return [self daysInMonthGrid];
     }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
@@ -66,6 +79,9 @@ NSString *kCellID = @"calendarGridCellID";
     int dateNumber = [[(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row] dateInformation].day;
     cell.calendarDateLabel.text = [NSString stringWithFormat:@"%d", dateNumber];
     
+    if(indexPath.row == 0){
+        [self adjustFrameForCollectionView:collectionView withCell:cell];
+    }
     return cell;
     }
 
@@ -76,13 +92,10 @@ NSString *kCellID = @"calendarGridCellID";
         self.datesArray = [DateHelper getMonthGridDatesForDate:selectedDate];
         UIViewAnimationOptions animationOption = indexPath.row == 0 ? UIViewAnimationOptionTransitionCurlDown : UIViewAnimationOptionTransitionCurlUp;
         [UIView transitionWithView:collectionView duration:1.0 options:animationOption animations:^{
-            [collectionView reloadData];            
-        } completion:^(BOOL finished) {
-            [collectionView sizeToFit];
-        }];
+            UICollectionViewCell *collectionViewCell = [collectionView cellForItemAtIndexPath:indexPath];
+            [self adjustFrameForCollectionView:collectionView withCell:collectionViewCell];
+            [collectionView reloadData];
+        } completion:^(BOOL finished) {}];
     }
-    
 }
-
-
 @end
