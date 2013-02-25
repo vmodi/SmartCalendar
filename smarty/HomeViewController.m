@@ -8,11 +8,13 @@
 #import "HomeViewController.h"
 #import "UICalendarDateViewCell.h"
 #import "DateHelper.h"
+#import "UIColorExt.h";
 
 @interface HomeViewController (){
-    int firstOfPrev,lastOfPrev;
 	NSArray *marks;
     NSDateFormatter *monthYearDateFormatter;
+    NSDate *selectedDate;
+    TKDateInformation selectedDateInfo;
 }
 @property (strong,nonatomic) NSDate *monthDate;
 @property (nonatomic,strong) NSArray *datesArray;
@@ -44,6 +46,7 @@ NSString *kCellID = @"calendarGridCellID";
     [monthYearDateFormatter setDateFormat:@"MMMM yyyy"];
 
     [self prepareMonthGridForDate:[NSDate date]];
+    [self updateWeekdayTitles];
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,12 +55,14 @@ NSString *kCellID = @"calendarGridCellID";
     // Dispose of any resources that can be recreated.
 }
 
-#pragma - public methods
+#pragma mark - public methods
 
 
 
-#pragma - private methods
+#pragma mark - private methods
 -(void)prepareMonthGridForDate:(NSDate *) date{
+    selectedDate = date;
+    selectedDateInfo = [selectedDate dateInformation];
     self.datesArray = [DateHelper getMonthGridDatesForDate:date];
     self.monthGridTitle.text = [monthYearDateFormatter stringFromDate:date];
 }
@@ -76,7 +81,28 @@ NSString *kCellID = @"calendarGridCellID";
     [collectionView setFrame:collectionViwFrame];
 }
 
-#pragma - collectionview data source delegate methods
+- (void)updateWeekdayTitles {
+    NSMutableArray *weekDayTitles;
+    for (UIView *headerView in self.monthGridHeader.subviews) {
+        if (headerView != self.monthGridTitle) {
+            [weekDayTitles addObject:headerView];
+        }
+    }
+    
+    CGFloat labelOffset = 320.0 / weekDayTitles.count;
+    CGFloat currentOffset = 0.0;
+    
+    for (UILabel *weekdayTitle in weekDayTitles) {
+        CGRect buttonFrame = [weekdayTitle frame];
+        buttonFrame.origin.x = currentOffset;
+        buttonFrame.size.width = labelOffset;
+        [weekdayTitle setFrame:buttonFrame];
+        
+        currentOffset += labelOffset;
+    }
+}
+
+#pragma mark - collectionview data source delegate methods
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [self daysInMonthGrid];
     }
@@ -84,21 +110,23 @@ NSString *kCellID = @"calendarGridCellID";
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICalendarDateViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellID forIndexPath:indexPath];
-    
-    int dateNumber = [[(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row] dateInformation].day;
+    TKDateInformation cellDateInfo = [[(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row] dateInformation];
+    int dateNumber = cellDateInfo.day;
     cell.calendarDateLabel.text = [NSString stringWithFormat:@"%d", dateNumber];
+    
+    cell.calendarDateLabel.textColor = selectedDateInfo.month == cellDateInfo.month ? [UIColor monthGridTealColor] : [UIColor grayColor] ;
     
     if(indexPath.row == 0){
         [self adjustFrameForCollectionView:collectionView withCell:cell];
-    }
+    } 
     return cell;
     }
 
-#pragma  - UICollectionViewDelegate methods
+#pragma  mark - UICollectionViewDelegate methods
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.row == 0 || indexPath.row == [self collectionView:collectionView numberOfItemsInSection:indexPath.section] - 1){
-        NSDate *selectedDate = [(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row];
-        [self prepareMonthGridForDate:selectedDate];
+        NSDate *firstOrLastDate = [(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row];
+        [self prepareMonthGridForDate:firstOrLastDate];
         UIViewAnimationOptions animationOption = indexPath.row == 0 ? UIViewAnimationOptionTransitionCurlDown : UIViewAnimationOptionTransitionCurlUp;
         [UIView transitionWithView:collectionView duration:1.0 options:animationOption animations:^{
             UICollectionViewCell *collectionViewCell = [collectionView cellForItemAtIndexPath:indexPath];

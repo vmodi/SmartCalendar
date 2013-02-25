@@ -22,6 +22,7 @@
 		AD7E046116D04B8D006EBF01 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD7E045F16D04B8D006EBF01 /* HomeViewController.xib */; };
 		AD7E049116D3586A006EBF01 /* UICalendarDateViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AD7E049016D3586A006EBF01 /* UICalendarDateViewCell.m */; };
 		AD7E049316D358C6006EBF01 /* UICalendarDateViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD7E049216D358C6006EBF01 /* UICalendarDateViewCell.xib */; };
+		ADA60C2C16DB4C27005070E8 /* UIColorExt.m in Sources */ = {isa = PBXBuildFile; fileRef = ADA60C2B16DB4C27005070E8 /* UIColorExt.m */; };
 		ADE7F47D16D462B00081011D /* NSDate+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = ADE7F47C16D462B00081011D /* NSDate+TKCategory.m */; };
 		ADE7F48D16D465A10081011D /* NSDate+CalendarGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = ADE7F48C16D465A10081011D /* NSDate+CalendarGrid.m */; };
 		ADE7F4BC16D5F24A0081011D /* DateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ADE7F4BB16D5F24A0081011D /* DateHelper.m */; };
@@ -49,6 +50,8 @@
 		AD7E048F16D3586A006EBF01 /* UICalendarDateViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICalendarDateViewCell.h; sourceTree = "<group>"; };
 		AD7E049016D3586A006EBF01 /* UICalendarDateViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICalendarDateViewCell.m; sourceTree = "<group>"; };
 		AD7E049216D358C6006EBF01 /* UICalendarDateViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UICalendarDateViewCell.xib; sourceTree = "<group>"; };
+		ADA60C2A16DB4C27005070E8 /* UIColorExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIColorExt.h; sourceTree = "<group>"; };
+		ADA60C2B16DB4C27005070E8 /* UIColorExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIColorExt.m; sourceTree = "<group>"; };
 		ADE7F47B16D462B00081011D /* NSDate+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TKCategory.h"; sourceTree = "<group>"; };
 		ADE7F47C16D462B00081011D /* NSDate+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TKCategory.m"; sourceTree = "<group>"; };
 		ADE7F48B16D465A10081011D /* NSDate+CalendarGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CalendarGrid.h"; sourceTree = "<group>"; };
@@ -152,6 +155,8 @@
 		ADE7F47916D4624F0081011D /* categories */ = {
 			isa = PBXGroup;
 			children = (
+				ADA60C2A16DB4C27005070E8 /* UIColorExt.h */,
+				ADA60C2B16DB4C27005070E8 /* UIColorExt.m */,
 				ADE7F48B16D465A10081011D /* NSDate+CalendarGrid.h */,
 				ADE7F48C16D465A10081011D /* NSDate+CalendarGrid.m */,
 				ADE7F47B16D462B00081011D /* NSDate+TKCategory.h */,
@@ -244,6 +249,7 @@
 				ADE7F47D16D462B00081011D /* NSDate+TKCategory.m in Sources */,
 				ADE7F48D16D465A10081011D /* NSDate+CalendarGrid.m in Sources */,
 				ADE7F4BC16D5F24A0081011D /* DateHelper.m in Sources */,
+				ADA60C2C16DB4C27005070E8 /* UIColorExt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
