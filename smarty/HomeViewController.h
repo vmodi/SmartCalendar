@@ -9,5 +9,7 @@
 
 @interface HomeViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *monthGridView;
+@property (strong, nonatomic) IBOutlet UILabel *monthGridTitle;
+@property (strong, nonatomic) IBOutlet UIView *monthGridHeader;
 
 @end

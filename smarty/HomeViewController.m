@@ -12,6 +12,7 @@
 @interface HomeViewController (){
     int firstOfPrev,lastOfPrev;
 	NSArray *marks;
+    NSDateFormatter *monthYearDateFormatter;
 }
 @property (strong,nonatomic) NSDate *monthDate;
 @property (nonatomic,strong) NSArray *datesArray;
@@ -39,7 +40,10 @@ NSString *kCellID = @"calendarGridCellID";
     self.monthGridView.dataSource = self;
     self.monthGridView.delegate = self;
     
-    self.datesArray = [DateHelper getMonthGridDatesForDate:[NSDate date]];
+    monthYearDateFormatter = [[NSDateFormatter alloc] init];
+    [monthYearDateFormatter setDateFormat:@"MMMM yyyy"];
+
+    [self prepareMonthGridForDate:[NSDate date]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,6 +57,11 @@ NSString *kCellID = @"calendarGridCellID";
 
 
 #pragma - private methods
+-(void)prepareMonthGridForDate:(NSDate *) date{
+    self.datesArray = [DateHelper getMonthGridDatesForDate:date];
+    self.monthGridTitle.text = [monthYearDateFormatter stringFromDate:date];
+}
+
 - (NSInteger)daysInMonthGrid {
     NSDate *startDate = [self.datesArray objectAtIndex:0];
     NSDate *endDate = [self.datesArray objectAtIndex:1];
@@ -89,7 +98,7 @@ NSString *kCellID = @"calendarGridCellID";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.row == 0 || indexPath.row == [self collectionView:collectionView numberOfItemsInSection:indexPath.section] - 1){
         NSDate *selectedDate = [(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row];
-        self.datesArray = [DateHelper getMonthGridDatesForDate:selectedDate];
+        [self prepareMonthGridForDate:selectedDate];
         UIViewAnimationOptions animationOption = indexPath.row == 0 ? UIViewAnimationOptionTransitionCurlDown : UIViewAnimationOptionTransitionCurlUp;
         [UIView transitionWithView:collectionView duration:1.0 options:animationOption animations:^{
             UICollectionViewCell *collectionViewCell = [collectionView cellForItemAtIndexPath:indexPath];
