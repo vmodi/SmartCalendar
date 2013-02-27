@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD1FD00716DDE15500334365 /* controls_left_32.png in Resources */ = {isa = PBXBuildFile; fileRef = AD1FD00616DDE15500334365 /* controls_left_32.png */; };
+		AD1FD00916DDE21200334365 /* arrow_right_32.png in Resources */ = {isa = PBXBuildFile; fileRef = AD1FD00816DDE21200334365 /* arrow_right_32.png */; };
 		AD7E043B16D04991006EBF01 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E043A16D04991006EBF01 /* UIKit.framework */; };
 		AD7E043D16D04991006EBF01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E043C16D04991006EBF01 /* Foundation.framework */; };
 		AD7E043F16D04991006EBF01 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E043E16D04991006EBF01 /* CoreGraphics.framework */; };
@@ -29,6 +31,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AD1FD00616DDE15500334365 /* controls_left_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls_left_32.png; sourceTree = "<group>"; };
+		AD1FD00816DDE21200334365 /* arrow_right_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_right_32.png; sourceTree = "<group>"; };
 		AD7E043616D04991006EBF01 /* smarty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smarty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD7E043A16D04991006EBF01 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AD7E043C16D04991006EBF01 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -75,6 +79,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD1FD00416DDE0C300334365 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				AD1FD00816DDE21200334365 /* arrow_right_32.png */,
+				AD1FD00616DDE15500334365 /* controls_left_32.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		AD7E042B16D04991006EBF01 = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +119,7 @@
 		AD7E044216D04991006EBF01 /* smarty */ = {
 			isa = PBXGroup;
 			children = (
+				AD1FD00416DDE0C300334365 /* images */,
 				ADE7F4B816D5F1BC0081011D /* helper */,
 				ADE7F47916D4624F0081011D /* categories */,
 				AD7E048D16D35774006EBF01 /* cells */,
@@ -231,6 +245,8 @@
 				AD7E045316D04991006EBF01 /* Default-568h@2x.png in Resources */,
 				AD7E046116D04B8D006EBF01 /* HomeViewController.xib in Resources */,
 				AD7E049316D358C6006EBF01 /* UICalendarDateViewCell.xib in Resources */,
+				AD1FD00716DDE15500334365 /* controls_left_32.png in Resources */,
+				AD1FD00916DDE21200334365 /* arrow_right_32.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,7 @@
 #import "HomeViewController.h"
 #import "UICalendarDateViewCell.h"
 #import "DateHelper.h"
-#import "UIColorExt.h";
+#import "UIColorExt.h"
 
 @interface HomeViewController (){
 	NSArray *marks;
@@ -83,9 +83,9 @@ NSString *kCellID = @"calendarGridCellID";
 
 - (void)updateWeekdayTitles {
     NSMutableArray *weekDayTitles;
-    for (UIView *headerView in self.monthGridHeader.subviews) {
-        if (headerView != self.monthGridTitle) {
-            [weekDayTitles addObject:headerView];
+    for (UIView *headerSubView in self.monthGridHeader.subviews) {
+        if (headerSubView != self.monthGridTitle || ![headerSubView isKindOfClass:[UIButton class]]) {
+            [weekDayTitles addObject:headerSubView];
         }
     }
     
@@ -100,6 +100,18 @@ NSString *kCellID = @"calendarGridCellID";
         
         currentOffset += labelOffset;
     }
+}
+
+-(void)reloadMonthGridForDate:(NSDate*) date{
+    NSComparisonResult dateComparisionResult = [date compare:[self.datesArray objectAtIndex:0]];
+    UIViewAnimationOptions animationOption = (dateComparisionResult == NSOrderedAscending) ? UIViewAnimationOptionTransitionCurlDown : UIViewAnimationOptionTransitionCurlUp;
+
+    [self prepareMonthGridForDate:date];
+    [UIView transitionWithView:self.monthGridView duration:1.0 options:animationOption animations:^{
+        UICollectionViewCell *collectionViewCell = [self.monthGridView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        [self adjustFrameForCollectionView:self.monthGridView withCell:collectionViewCell];
+        [self.monthGridView reloadData];
+    } completion:^(BOOL finished) {}];
 }
 
 #pragma mark - collectionview data source delegate methods
@@ -125,14 +137,14 @@ NSString *kCellID = @"calendarGridCellID";
 #pragma  mark - UICollectionViewDelegate methods
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.row == 0 || indexPath.row == [self collectionView:collectionView numberOfItemsInSection:indexPath.section] - 1){
-        NSDate *firstOrLastDate = [(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row];
-        [self prepareMonthGridForDate:firstOrLastDate];
-        UIViewAnimationOptions animationOption = indexPath.row == 0 ? UIViewAnimationOptionTransitionCurlDown : UIViewAnimationOptionTransitionCurlUp;
-        [UIView transitionWithView:collectionView duration:1.0 options:animationOption animations:^{
-            UICollectionViewCell *collectionViewCell = [collectionView cellForItemAtIndexPath:indexPath];
-            [self adjustFrameForCollectionView:collectionView withCell:collectionViewCell];
-            [collectionView reloadData];
-        } completion:^(BOOL finished) {}];
+
     }
+}
+- (IBAction)loadPreviousDates:(id)sender {
+    [self reloadMonthGridForDate:[[self.datesArray objectAtIndex:0] dateByAddingDays:-1]];
+}
+
+- (IBAction)loadNextDates:(id)sender {
+        [self reloadMonthGridForDate:[[self.datesArray lastObject] dateByAddingDays:1]];
 }
 @end

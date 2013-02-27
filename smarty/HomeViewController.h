@@ -11,5 +11,7 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *monthGridView;
 @property (strong, nonatomic) IBOutlet UILabel *monthGridTitle;
 @property (strong, nonatomic) IBOutlet UIView *monthGridHeader;
+- (IBAction)loadPreviousDates:(id)sender;
+- (IBAction)loadNextDates:(id)sender;
 
 @end
