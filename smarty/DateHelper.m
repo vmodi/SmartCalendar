@@ -25,4 +25,14 @@
     return nil;
 }
 
++(NSArray *) getWeekDatesForDate:(NSDate *) currentDate{
+    if (currentDate) {
+        NSDate* firstDateOfWeek = [currentDate dateByAddingDays:-7];
+        NSDate *lastDateOfWeek= [currentDate dateByAddingDays:7];
+        
+        return [NSArray arrayWithObjects:firstDateOfWeek, lastDateOfWeek, nil];        
+    }
+    return nil;
+}
+
 @end

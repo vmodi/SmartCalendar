@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		AD1FD00716DDE15500334365 /* controls_left_32.png in Resources */ = {isa = PBXBuildFile; fileRef = AD1FD00616DDE15500334365 /* controls_left_32.png */; };
 		AD1FD00916DDE21200334365 /* arrow_right_32.png in Resources */ = {isa = PBXBuildFile; fileRef = AD1FD00816DDE21200334365 /* arrow_right_32.png */; };
+		AD1FD04B16E2918700334365 /* InfiniteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1FD04A16E2918700334365 /* InfiniteScrollView.m */; };
+		AD1FD04D16E2BEED00334365 /* HorizontalScrollerDateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD1FD04C16E2BEED00334365 /* HorizontalScrollerDateView.xib */; };
+		AD1FD05016E2BFB700334365 /* HorizontalScrollerDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1FD04F16E2BFB700334365 /* HorizontalScrollerDateView.m */; };
 		AD7E043B16D04991006EBF01 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E043A16D04991006EBF01 /* UIKit.framework */; };
 		AD7E043D16D04991006EBF01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E043C16D04991006EBF01 /* Foundation.framework */; };
 		AD7E043F16D04991006EBF01 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E043E16D04991006EBF01 /* CoreGraphics.framework */; };
@@ -33,6 +36,11 @@
 /* Begin PBXFileReference section */
 		AD1FD00616DDE15500334365 /* controls_left_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls_left_32.png; sourceTree = "<group>"; };
 		AD1FD00816DDE21200334365 /* arrow_right_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_right_32.png; sourceTree = "<group>"; };
+		AD1FD04916E2918700334365 /* InfiniteScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfiniteScrollView.h; sourceTree = "<group>"; };
+		AD1FD04A16E2918700334365 /* InfiniteScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfiniteScrollView.m; sourceTree = "<group>"; };
+		AD1FD04C16E2BEED00334365 /* HorizontalScrollerDateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HorizontalScrollerDateView.xib; sourceTree = "<group>"; };
+		AD1FD04E16E2BFB700334365 /* HorizontalScrollerDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizontalScrollerDateView.h; sourceTree = "<group>"; };
+		AD1FD04F16E2BFB700334365 /* HorizontalScrollerDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizontalScrollerDateView.m; sourceTree = "<group>"; };
 		AD7E043616D04991006EBF01 /* smarty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smarty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD7E043A16D04991006EBF01 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AD7E043C16D04991006EBF01 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -88,6 +96,15 @@
 			name = images;
 			sourceTree = "<group>";
 		};
+		AD1FD04416E1C83E00334365 /* customViews */ = {
+			isa = PBXGroup;
+			children = (
+				AD1FD04916E2918700334365 /* InfiniteScrollView.h */,
+				AD1FD04A16E2918700334365 /* InfiniteScrollView.m */,
+			);
+			name = customViews;
+			sourceTree = "<group>";
+		};
 		AD7E042B16D04991006EBF01 = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +136,7 @@
 		AD7E044216D04991006EBF01 /* smarty */ = {
 			isa = PBXGroup;
 			children = (
+				AD1FD04416E1C83E00334365 /* customViews */,
 				AD1FD00416DDE0C300334365 /* images */,
 				ADE7F4B816D5F1BC0081011D /* helper */,
 				ADE7F47916D4624F0081011D /* categories */,
@@ -162,6 +180,9 @@
 				AD7E048F16D3586A006EBF01 /* UICalendarDateViewCell.h */,
 				AD7E049016D3586A006EBF01 /* UICalendarDateViewCell.m */,
 				AD7E049216D358C6006EBF01 /* UICalendarDateViewCell.xib */,
+				AD1FD04E16E2BFB700334365 /* HorizontalScrollerDateView.h */,
+				AD1FD04F16E2BFB700334365 /* HorizontalScrollerDateView.m */,
+				AD1FD04C16E2BEED00334365 /* HorizontalScrollerDateView.xib */,
 			);
 			name = cells;
 			sourceTree = "<group>";
@@ -247,6 +268,7 @@
 				AD7E049316D358C6006EBF01 /* UICalendarDateViewCell.xib in Resources */,
 				AD1FD00716DDE15500334365 /* controls_left_32.png in Resources */,
 				AD1FD00916DDE21200334365 /* arrow_right_32.png in Resources */,
+				AD1FD04D16E2BEED00334365 /* HorizontalScrollerDateView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +288,8 @@
 				ADE7F48D16D465A10081011D /* NSDate+CalendarGrid.m in Sources */,
 				ADE7F4BC16D5F24A0081011D /* DateHelper.m in Sources */,
 				ADA60C2C16DB4C27005070E8 /* UIColorExt.m in Sources */,
+				AD1FD04B16E2918700334365 /* InfiniteScrollView.m in Sources */,
+				AD1FD05016E2BFB700334365 /* HorizontalScrollerDateView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
