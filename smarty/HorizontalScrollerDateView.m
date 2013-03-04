@@ -8,17 +8,47 @@
 
 #import "HorizontalScrollerDateView.h"
 
+@interface HorizontalScrollerDateView()
+@property (copy) NSDate* cellDate;
+
+@end
+
 @implementation HorizontalScrollerDateView
 @synthesize dateLabel, dayLabel;
+@synthesize cellDate;
+
+static NSDateFormatter *dayFormatter;
+static NSDateFormatter *dateNumFormatter;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self setDateFormatter];
     }
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        [self setDateFormatter];
+    }
+    return self;
+}
+
+- (void) setDateFormatter{
+    dayFormatter = [[NSDateFormatter alloc] init];
+    [dayFormatter setDateFormat:@"EEE"];
+    
+    dateNumFormatter = [[NSDateFormatter alloc] init];
+    [dateNumFormatter setDateFormat:@"dd"];    
+}
+
+-(void) populateCellWithDate:(NSDate*)date{
+    self.cellDate = date;
+    self.dayLabel.text = [dayFormatter stringFromDate:date];
+    self.dateLabel.text = [dateNumFormatter stringFromDate:date];
+    
+}
 
 @end

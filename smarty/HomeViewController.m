@@ -142,29 +142,6 @@ NSString *kCellID = @"calendarGridCellID";
     }
 }
 
-- (void)adjustCellsIfNecessary:(NSIndexPath*)indexPath{
-    if (indexPath.row == 2) {
-        [self moveDataSourceDatesBy:-2];
-        
-        NSMutableArray *indexPathToRemove = [[NSMutableArray alloc] init];
-        NSMutableArray *indexPathToAdd = [[NSMutableArray alloc] init];
-        int totalDays = [self daysInMonthGrid];
-        for (int i=totalDays - 1 ; i>totalDays - 2; i--) {
-//            [indexPathToRemove addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-//            [indexPathToAdd addObject:[NSIndexPath indexPathForRow:(totalDays - i) inSection:0]];
-            NSIndexPath *fromIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            NSIndexPath *toIndexPath = [NSIndexPath indexPathForRow:(totalDays - i) inSection:0];
-            [self.monthGridView moveItemAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
-        }
-//        [self.monthGridView deleteItemsAtIndexPaths:indexPathToRemove];
-//        [self.monthGridView insertItemsAtIndexPaths:indexPathToAdd];
-    }
-    if (indexPath.row == 12) {
-        [self moveDataSourceDatesBy:2];
-    }
-}
-
-
 #pragma mark - collectionview data source delegate methods
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [self daysInMonthGrid];
@@ -172,7 +149,7 @@ NSString *kCellID = @"calendarGridCellID";
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"requesting cell for indexPath.row = %d ", indexPath.row);
+    //    NSLog(@"requesting cell for indexPath.row = %d ", indexPath.row);
     UICalendarDateViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellID forIndexPath:indexPath];
     TKDateInformation cellDateInfo = [[(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row] dateInformation];
     int dateNumber = cellDateInfo.day;
@@ -183,50 +160,25 @@ NSString *kCellID = @"calendarGridCellID";
     if(indexPath.row == 0){
         [self adjustFrameForCollectionView:collectionView withCell:cell];
     }
-    
-//    if (isCollectionViewInWeekMode) {
-//        [self adjustCellsIfNecessary:indexPath];
-//    }
-    
     return cell;
-    }
+}
 
 #pragma  mark - UICollectionViewDelegate methods
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if(!isCollectionViewInWeekMode){
         isCollectionViewInWeekMode = YES;
-        UICollectionViewCell *selectedCell = [collectionView cellForItemAtIndexPath:indexPath];
-        
-        CGRect collectionViewCellFrame = selectedCell.frame;
-        CGRect collectionViewFrame = collectionView.frame;
-        
-//        if(collectionViewFrame.size.height > collectionViewCellFrame.size.height * 1.5){
-//            
-            NSArray *newDates = [DateHelper getWeekDatesForDate:[(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row]];
-//
-//            NSMutableArray *indexPathToRemove = [[NSMutableArray alloc] init];
-//            for (int i=0; i<[self daysInMonthGrid]; i++) {
-//                NSDate *dateAtIndexPath = [(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:i];
-//                if([dateAtIndexPath compare:[newDates objectAtIndex:0]] == NSOrderedAscending){
-//                    [indexPathToRemove addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-//                }
-//                if([dateAtIndexPath compare:[newDates lastObject]] == NSOrderedDescending){
-//                    [indexPathToRemove addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-//                }
-//            }
-            self.datesArray = newDates;
-//            [collectionView deleteItemsAtIndexPaths:indexPathToRemove];]
-        [collectionView reloadData];
-                    ((UICollectionViewFlowLayout*)collectionView.collectionViewLayout).scrollDirection = UICollectionViewScrollDirectionHorizontal;
-            collectionViewFrame.size.height = collectionViewCellFrame.size.height;
-            collectionView.frame = collectionViewFrame;
-            
-            
 
-            [self recenterIfNecessary];
-            [self printSize:collectionView.collectionViewLayout.collectionViewContentSize];
-            
-//        }
+        NSDate* userSelectedDate = [(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row];
+        [self.weekInfiniteScrollView prepareScrollerWithDate:userSelectedDate];
+        
+        [UIView beginAnimations:@"showingWeekScroller" context:nil];
+        [UIView setAnimationDuration:0.5];
+        CGRect collectionViewFrame = collectionView.frame;
+        collectionViewFrame.size.height = 0;
+        
+        self.weekInfiniteScrollView.hidden = NO;
+        collectionView.frame = collectionViewFrame;
+        [UIView commitAnimations];
     }
 }
 

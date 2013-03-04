@@ -6,11 +6,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "InfiniteScrollView.h"
 
 @interface HomeViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *monthGridView;
 @property (strong, nonatomic) IBOutlet UILabel *monthGridTitle;
 @property (strong, nonatomic) IBOutlet UIView *monthGridHeader;
+@property (strong, nonatomic) IBOutlet InfiniteScrollView *weekInfiniteScrollView;
+
+
 - (IBAction)loadPreviousDates:(id)sender;
 - (IBAction)loadNextDates:(id)sender;
 

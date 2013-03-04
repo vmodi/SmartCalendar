@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "smarty/HomeViewController.m"
-         timestampString = "383961237.466533"
+         timestampString = "384044152.050809"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "182"
-         endingLineNumber = "182"
+         startingLineNumber = "159"
+         endingLineNumber = "159"
          landmarkName = "-collectionView:cellForItemAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,25 +60,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "smarty/HomeViewController.m"
-         timestampString = "383961237.466533"
+         timestampString = "384044152.050809"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "144"
-         endingLineNumber = "144"
-         landmarkName = "@implementation HomeViewController"
-         landmarkType = "3">
+         startingLineNumber = "162"
+         endingLineNumber = "162"
+         landmarkName = "-collectionView:cellForItemAtIndexPath:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "smarty/HomeViewController.m"
-         timestampString = "383961237.466533"
+         filePath = "smarty/InfiniteScrollView.m"
+         timestampString = "384072393.302761"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "185"
-         endingLineNumber = "185"
-         landmarkName = "-collectionView:cellForItemAtIndexPath:"
+         startingLineNumber = "110"
+         endingLineNumber = "110"
+         landmarkName = "-placeNewLabelOnRight:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "smarty/InfiniteScrollView.m"
+         timestampString = "384072393.302761"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "144"
+         endingLineNumber = "144"
+         landmarkName = "-tileLabelsFromMinX:toMaxX:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
