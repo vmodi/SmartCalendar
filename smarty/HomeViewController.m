@@ -53,7 +53,6 @@ NSString *kCellID = @"calendarGridCellID";
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - public methods
@@ -83,17 +82,11 @@ NSString *kCellID = @"calendarGridCellID";
 }
 
 - (void)updateWeekdayTitles {
-    NSMutableArray *weekDayTitles;
-    for (UIView *headerSubView in self.monthGridHeader.subviews) {
-        if (headerSubView != self.monthGridTitle || ![headerSubView isKindOfClass:[UIButton class]]) {
-            [weekDayTitles addObject:headerSubView];
-        }
-    }
-    
-    CGFloat labelOffset = 320.0 / weekDayTitles.count;
+    CGFloat labelOffset = 320.0 / self.weekDaysContainer.subviews.count;
     CGFloat currentOffset = 0.0;
     
-    for (UILabel *weekdayTitle in weekDayTitles) {
+    for (UILabel *weekdayTitle in self.weekDaysContainer.subviews) {
+        weekdayTitle.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin);
         CGRect buttonFrame = [weekdayTitle frame];
         buttonFrame.origin.x = currentOffset;
         buttonFrame.size.width = labelOffset;
@@ -114,26 +107,6 @@ NSString *kCellID = @"calendarGridCellID";
         [self.monthGridView reloadData];
     } completion:^(BOOL finished) {}];
 }
-
-- (void)recenterIfNecessary {
-    CGPoint currentOffset = [self.monthGridView contentOffset];
-    CGFloat contentWidth = [self.monthGridView.collectionViewLayout collectionViewContentSize].width;
-    CGFloat centerOffsetX = (contentWidth - [self.monthGridView bounds].size.width) / 2.0;
-//    CGFloat distanceFromCenter = fabs(currentOffset.x - centerOffsetX);
-    
-//    if (distanceFromCenter > (contentWidth / 4.0)) {
-        self.monthGridView.contentOffset = CGPointMake(centerOffsetX, currentOffset.y);
-        
-//        // move content by the same amount so it appears to stay still
-//        for (UILabel *label in visibleLabels) {
-//            CGPoint center = [labelContainerView convertPoint:label.center toView:self];
-//            center.x += (centerOffsetX - currentOffset.x);
-//            label.center = [self convertPoint:center toView:labelContainerView];
-//        }
-//    }
-}
-
-
 
 - (void) moveDataSourceDatesBy:(NSInteger)shift{
     for (int i=0; i<self.datesArray.count; i++) {
@@ -171,14 +144,28 @@ NSString *kCellID = @"calendarGridCellID";
         NSDate* userSelectedDate = [(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row];
         [self.weekInfiniteScrollView prepareScrollerWithDate:userSelectedDate];
         
-        [UIView beginAnimations:@"showingWeekScroller" context:nil];
-        [UIView setAnimationDuration:0.5];
+        CGRect weekDaysContainerFrame = self.weekDaysContainer.frame;
+        weekDaysContainerFrame.size.height = 0;
+        
         CGRect collectionViewFrame = collectionView.frame;
         collectionViewFrame.size.height = 0;
         
-        self.weekInfiniteScrollView.hidden = NO;
-        collectionView.frame = collectionViewFrame;
-        [UIView commitAnimations];
+        CGRect infiniteScrollViewFrame= self.weekInfiniteScrollView.frame;
+        infiniteScrollViewFrame.origin = weekDaysContainerFrame.origin;
+        
+        [UIView transitionWithView:collectionView duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            collectionView.frame = collectionViewFrame;
+            
+        } completion:^(BOOL finished) {}];
+        [UIView transitionWithView:self.weekDaysContainer duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            self.weekDaysContainer.frame = weekDaysContainerFrame;
+            
+        } completion:^(BOOL finished) {}];
+        [UIView transitionWithView:self.weekInfiniteScrollView duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            self.weekInfiniteScrollView.hidden = NO;
+            self.weekInfiniteScrollView.frame = infiniteScrollViewFrame;
+            
+        } completion:^(BOOL finished) {}];
     }
 }
 
