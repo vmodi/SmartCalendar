@@ -14,6 +14,8 @@
 @property (strong, nonatomic) IBOutlet UIView *monthGridHeader;
 @property (strong, nonatomic) IBOutlet InfiniteScrollView *weekInfiniteScrollView;
 @property (strong, nonatomic) IBOutlet UIView *weekDaysContainer;
+@property (strong, nonatomic) IBOutlet UIButton *monthRightArrow;
+@property (strong, nonatomic) IBOutlet UIButton *monthLeftArrow;
 
 
 - (IBAction)loadPreviousDates:(id)sender;

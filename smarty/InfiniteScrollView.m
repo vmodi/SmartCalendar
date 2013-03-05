@@ -7,8 +7,9 @@
 #import "NSDate+TKCategory.h"
 
 @interface InfiniteScrollView () {
-    NSMutableArray *visibleLabels;
+    NSMutableArray *visibleDates;
     NSDate         *startDate;
+    NSMutableArray *reuseDateCellsStorage;
 }
 
 - (void)tileLabelsFromMinX:(CGFloat)minimumVisibleX toMaxX:(CGFloat)maximumVisibleX;
@@ -22,7 +23,9 @@
     if ((self = [super initWithCoder:aDecoder])) {
         self.contentSize = CGSizeMake(5000, self.frame.size.height);
         
-        visibleLabels = [[NSMutableArray alloc] init];
+        visibleDates = [[NSMutableArray alloc] init];
+        reuseDateCellsStorage = [[NSMutableArray alloc] init];
+        
         [self setShowsHorizontalScrollIndicator:NO];
     }
     return self;
@@ -42,7 +45,7 @@
         self.contentOffset = CGPointMake(centerOffsetX, currentOffset.y);
         
         // move content by the same amount so it appears to stay still
-        for (UILabel *label in visibleLabels) {
+        for (UILabel *label in visibleDates) {
             CGPoint center = label.center;
             center.x += (centerOffsetX - currentOffset.x);
             label.center = center;
@@ -71,7 +74,7 @@
 
 #pragma mark - public methods
 -(void) prepareScrollerWithDate:(NSDate *)date{
-    [visibleLabels removeAllObjects];
+    [visibleDates removeAllObjects];
     startDate = date;
     [self updateScrollView];
 }
@@ -81,7 +84,14 @@
 
 - (HorizontalScrollerDateView*) getDateView{
     HorizontalScrollerDateView *dateView;
-    
+    if (reuseDateCellsStorage.count) {
+        for (HorizontalScrollerDateView *reuseDateView in reuseDateCellsStorage){
+            if (!reuseDateView.isActive) {
+                reuseDateView.isActive = YES;
+                return reuseDateView;
+            }
+        }
+    }
     NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"HorizontalScrollerDateView" owner:self options:nil];
     id firstObject = [topLevelObjects objectAtIndex:0];
     if ([firstObject isKindOfClass:[HorizontalScrollerDateView class]]) {
@@ -89,6 +99,8 @@
     } else {
         dateView = [topLevelObjects objectAtIndex:1];
     }
+    dateView.isActive = YES;
+    [reuseDateCellsStorage addObject:dateView];
     return dateView;
 }
 
@@ -101,14 +113,14 @@
 - (CGFloat)placeNewLabelOnRight:(CGFloat)rightEdge {
     HorizontalScrollerDateView *dateView = [self insertLabel];
     NSDate* dateForCell;
-    if(!visibleLabels.count){
+    if(!visibleDates.count){
         dateForCell = startDate;
     } else {
-        dateForCell = ((HorizontalScrollerDateView *)[visibleLabels lastObject]).cellDate;
+        dateForCell = ((HorizontalScrollerDateView *)[visibleDates lastObject]).cellDate;
         dateForCell = [dateForCell dateByAddingDays:1];
     }
     [dateView populateCellWithDate:dateForCell];
-    [visibleLabels addObject:dateView]; // add rightmost label at the end of the array
+    [visibleDates addObject:dateView]; // add rightmost label at the end of the array
     
     CGRect frame = [dateView frame];
     frame.origin.x = rightEdge;
@@ -121,14 +133,14 @@
 - (CGFloat)placeNewLabelOnLeft:(CGFloat)leftEdge {
     HorizontalScrollerDateView *dateView = [self insertLabel];
     NSDate* dateForCell;
-    if(!visibleLabels.count){
+    if(!visibleDates.count){
         dateForCell = startDate;
     } else {
-        dateForCell = ((HorizontalScrollerDateView *)[visibleLabels objectAtIndex:0]).cellDate;
+        dateForCell = ((HorizontalScrollerDateView *)[visibleDates objectAtIndex:0]).cellDate;
         dateForCell = [dateForCell dateByAddingDays:-1];
     }
     [dateView populateCellWithDate:dateForCell];
-    [visibleLabels insertObject:dateView atIndex:0]; // add leftmost label at the beginning of the array
+    [visibleDates insertObject:dateView atIndex:0]; // add leftmost label at the beginning of the array
     
     CGRect frame = [dateView frame];
     frame.origin.x = leftEdge - frame.size.width;
@@ -141,38 +153,40 @@
 - (void)tileLabelsFromMinX:(CGFloat)minimumVisibleX toMaxX:(CGFloat)maximumVisibleX {
     // the upcoming tiling logic depends on there already being at least one label in the visibleLabels array, so
     // to kick off the tiling we need to make sure there's at least one label
-    if ([visibleLabels count] == 0) {
+    if ([visibleDates count] == 0) {
         [self placeNewLabelOnRight:minimumVisibleX];
     }
     
     // add labels that are missing on right side
-    HorizontalScrollerDateView *lastLabel = [visibleLabels lastObject];
-    CGFloat rightEdge = CGRectGetMaxX([lastLabel frame]);
+    HorizontalScrollerDateView *lastDateView = [visibleDates lastObject];
+    CGFloat rightEdge = CGRectGetMaxX([lastDateView frame]);
     while (rightEdge < maximumVisibleX) {
         rightEdge = [self placeNewLabelOnRight:rightEdge];
     }
     
     // add labels that are missing on left side
-    HorizontalScrollerDateView *firstLabel = [visibleLabels objectAtIndex:0];
-    CGFloat leftEdge = CGRectGetMinX([firstLabel frame]);
+    HorizontalScrollerDateView *firstDateView = [visibleDates objectAtIndex:0];
+    CGFloat leftEdge = CGRectGetMinX([firstDateView frame]);
     while (leftEdge > minimumVisibleX) {
         leftEdge = [self placeNewLabelOnLeft:leftEdge];
     }
     
     // remove labels that have fallen off right edge
-    lastLabel = [visibleLabels lastObject];
-    while ([lastLabel frame].origin.x > maximumVisibleX) {
-        [lastLabel removeFromSuperview];
-        [visibleLabels removeLastObject];
-        lastLabel = [visibleLabels lastObject];
+    lastDateView = [visibleDates lastObject];
+    while ([lastDateView frame].origin.x > maximumVisibleX) {
+//        [lastLabel removeFromSuperview];
+        lastDateView.isActive = NO;
+        [visibleDates removeLastObject];
+        lastDateView = [visibleDates lastObject];
     }
     
     // remove labels that have fallen off left edge
-    firstLabel = [visibleLabels objectAtIndex:0];
-    while (CGRectGetMaxX([firstLabel frame]) < minimumVisibleX) {
-        [firstLabel removeFromSuperview];
-        [visibleLabels removeObjectAtIndex:0];
-        firstLabel = [visibleLabels objectAtIndex:0];
+    firstDateView = [visibleDates objectAtIndex:0];
+    while (CGRectGetMaxX([firstDateView frame]) < minimumVisibleX) {
+//        [firstDateView removeFromSuperview];
+        firstDateView.isActive = NO;
+        [visibleDates removeObjectAtIndex:0];
+        firstDateView = [visibleDates objectAtIndex:0];
     }
 }
 

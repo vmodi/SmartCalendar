@@ -160,7 +160,10 @@ NSString *kCellID = @"calendarGridCellID";
         [UIView transitionWithView:self.weekDaysContainer duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
             self.weekDaysContainer.frame = weekDaysContainerFrame;
             
-        } completion:^(BOOL finished) {}];
+        } completion:^(BOOL finished) {
+            self.monthLeftArrow.hidden = YES;
+            self.monthRightArrow.hidden = YES;
+        }];
         [UIView transitionWithView:self.weekInfiniteScrollView duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
             self.weekInfiniteScrollView.hidden = NO;
             self.weekInfiniteScrollView.frame = infiniteScrollViewFrame;

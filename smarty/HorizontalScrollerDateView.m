@@ -16,6 +16,7 @@
 @implementation HorizontalScrollerDateView
 @synthesize dateLabel, dayLabel;
 @synthesize cellDate;
+@synthesize isActive;
 
 static NSDateFormatter *dayFormatter;
 static NSDateFormatter *dateNumFormatter;

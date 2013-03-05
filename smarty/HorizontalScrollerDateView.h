@@ -12,6 +12,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *dayLabel;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (readonly, copy) NSDate* cellDate;
+@property (atomic) BOOL isActive;
 
 -(void) populateCellWithDate:(NSDate*)date;
 @end

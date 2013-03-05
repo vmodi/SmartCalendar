@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "smarty/InfiniteScrollView.m"
-         timestampString = "384072393.302761"
+         timestampString = "384163982.096341"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "110"
-         endingLineNumber = "110"
+         startingLineNumber = "122"
+         endingLineNumber = "122"
          landmarkName = "-placeNewLabelOnRight:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "smarty/InfiniteScrollView.m"
-         timestampString = "384072393.302761"
+         timestampString = "384163982.096341"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "144"
-         endingLineNumber = "144"
+         startingLineNumber = "156"
+         endingLineNumber = "156"
          landmarkName = "-tileLabelsFromMinX:toMaxX:"
          landmarkType = "5">
       </FileBreakpoint>
