@@ -24,7 +24,9 @@
 
 @implementation HomeViewController
 @synthesize monthGridView;
-NSString *kCellID = @"calendarGridCellID";
+@synthesize monthGridTitle;
+
+static NSString *kCellID = @"calendarGridCellID";
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,8 +52,8 @@ NSString *kCellID = @"calendarGridCellID";
     [self prepareMonthGridForDate:[NSDate date]];
     [self updateWeekdayTitles];
     
-    WeatherForecast *forecast = [[WeatherForecast alloc] init];
-    [forecast getForcastForCity:@"Redmond" State:@"WA"];
+//    WeatherForecast *forecast = [[WeatherForecast alloc] init];
+//    [forecast getForcastForCity:@"Redmond" State:@"WA"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,7 +70,9 @@ NSString *kCellID = @"calendarGridCellID";
     selectedDate = date;
     selectedDateInfo = [selectedDate dateInformation];
     self.datesArray = [DateHelper getMonthGridDatesForDate:date];
-    self.monthGridTitle.text = [monthYearDateFormatter stringFromDate:date];
+    
+    [self.monthGridTitle setTitle:[monthYearDateFormatter stringFromDate:date] forState:UIControlStateNormal];
+    [self.monthGridTitle setTitle:[monthYearDateFormatter stringFromDate:date] forState:UIControlStateReserved];
 }
 
 - (NSInteger)daysInMonthGrid {
@@ -90,7 +94,7 @@ NSString *kCellID = @"calendarGridCellID";
     CGFloat currentOffset = 0.0;
     
     for (UILabel *weekdayTitle in self.weekDaysContainer.subviews) {
-        weekdayTitle.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin);
+        weekdayTitle.autoresizingMask = (UIViewAutoresizingFlexibleHeight);
         CGRect buttonFrame = [weekdayTitle frame];
         buttonFrame.origin.x = currentOffset;
         buttonFrame.size.width = labelOffset;
@@ -173,6 +177,7 @@ NSString *kCellID = @"calendarGridCellID";
             self.weekInfiniteScrollView.frame = infiniteScrollViewFrame;
             
         } completion:^(BOOL finished) {}];
+        self.monthGridTitle.userInteractionEnabled = YES;        
     }
 }
 
@@ -184,6 +189,42 @@ NSString *kCellID = @"calendarGridCellID";
 
 - (IBAction)loadNextDates:(id)sender {
         [self reloadMonthGridForDate:[[self.datesArray lastObject] dateByAddingDays:1]];
+}
+
+- (IBAction)onMonthTitleClick:(id)sender {
+    if(isCollectionViewInWeekMode){
+        self.monthGridTitle.userInteractionEnabled = NO;
+        isCollectionViewInWeekMode = NO;
+        
+        CGRect infiniteScrollViewFrame= self.weekInfiniteScrollView.frame;
+//        infiniteScrollViewFrame.size.height = 0;
+        
+        CGRect weekDaysContainerFrame = self.weekDaysContainer.frame;
+        weekDaysContainerFrame.origin = infiniteScrollViewFrame.origin;
+        weekDaysContainerFrame.size.height = 21;
+        
+        CGRect collectionViewFrame = self.monthGridView.frame;
+        collectionViewFrame.origin.y = weekDaysContainerFrame.origin.y + weekDaysContainerFrame.size.height;
+        collectionViewFrame.size.height = 400;
+        
+        [UIView transitionWithView:self.weekInfiniteScrollView duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            self.weekInfiniteScrollView.hidden = YES;
+            self.weekInfiniteScrollView.frame = infiniteScrollViewFrame;
+            
+        } completion:^(BOOL finished) {}];
+        [UIView transitionWithView:self.monthGridView duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            self.monthGridView.frame = collectionViewFrame;
+            [self.monthGridView reloadData];
+            
+        } completion:^(BOOL finished) {}];
+        [UIView transitionWithView:self.weekDaysContainer duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            self.weekDaysContainer.frame = weekDaysContainerFrame;
+            
+        } completion:^(BOOL finished) {
+            self.monthLeftArrow.hidden = NO;
+            self.monthRightArrow.hidden = NO;
+        }];
+    }
 }
 
 #pragma mark - debug helper methods

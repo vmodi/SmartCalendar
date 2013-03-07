@@ -10,7 +10,9 @@
 
 @interface HomeViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *monthGridView;
-@property (strong, nonatomic) IBOutlet UILabel *monthGridTitle;
+@property (strong, nonatomic) IBOutlet UIButton *monthGridTitle;
+
+
 @property (strong, nonatomic) IBOutlet UIView *monthGridHeader;
 @property (strong, nonatomic) IBOutlet InfiniteScrollView *weekInfiniteScrollView;
 @property (strong, nonatomic) IBOutlet UIView *weekDaysContainer;
@@ -20,5 +22,6 @@
 
 - (IBAction)loadPreviousDates:(id)sender;
 - (IBAction)loadNextDates:(id)sender;
+- (IBAction)onMonthTitleClick:(id)sender;
 
 @end
