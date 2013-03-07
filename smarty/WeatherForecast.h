@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface WeatherForecast : NSObject
-
+-(void) getForcastForCity:(NSString*)city State:(NSString*)state;
 @end
