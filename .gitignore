@@ -1,4 +1,4 @@
-./smarty/AppConfig.h
 bin/
+smarty/AppConfig.h
 gen/
 .DS_Store
