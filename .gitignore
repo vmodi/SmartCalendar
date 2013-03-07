@@ -1,0 +1,4 @@
+./smarty/AppConfig.h
+bin/
+gen/
+.DS_Store

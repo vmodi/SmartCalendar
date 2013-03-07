@@ -9,6 +9,7 @@
 #import "UICalendarDateViewCell.h"
 #import "DateHelper.h"
 #import "UIColorExt.h"
+#import "WeatherForecast.h"
 
 @interface HomeViewController (){
 	NSArray *marks;
@@ -48,6 +49,9 @@ NSString *kCellID = @"calendarGridCellID";
 
     [self prepareMonthGridForDate:[NSDate date]];
     [self updateWeekdayTitles];
+    
+    WeatherForecast *forecast = [[WeatherForecast alloc] init];
+    [forecast getForcastForCity:@"Redmond" State:@"WA"];
 }
 
 - (void)didReceiveMemoryWarning
