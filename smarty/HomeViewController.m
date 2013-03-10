@@ -10,6 +10,7 @@
 #import "DateHelper.h"
 #import "UIColorExt.h"
 #import "WeatherForecast.h"
+#import "EventsFromKit.h"
 
 @interface HomeViewController (){
 	NSArray *marks;
@@ -17,6 +18,7 @@
     NSDate *selectedDate;
     TKDateInformation selectedDateInfo;
     BOOL isCollectionViewInWeekMode;
+    EventsFromKit *eventDataModel;
 }
 @property (strong,nonatomic) NSDate *monthDate;
 @property (nonatomic,strong) NSArray *datesArray;
@@ -51,6 +53,9 @@ static NSString *kCellID = @"calendarGridCellID";
 
     [self prepareMonthGridForDate:[NSDate date]];
     [self updateWeekdayTitles];
+    
+    eventDataModel = [[EventsFromKit alloc] init];
+//    [eventDataModel fetchStoredEvents];
     
 //    WeatherForecast *forecast = [[WeatherForecast alloc] init];
 //    [forecast getForcastForCity:@"Redmond" State:@"WA"];

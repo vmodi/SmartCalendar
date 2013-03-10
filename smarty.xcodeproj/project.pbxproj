@@ -39,6 +39,8 @@
 		ADAC61C416E7DED600CE8FBC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAC61C316E7DED600CE8FBC /* MobileCoreServices.framework */; };
 		ADAC61D216E8136500CE8FBC /* arrow_left_22.png in Resources */ = {isa = PBXBuildFile; fileRef = ADAC61D016E8136500CE8FBC /* arrow_left_22.png */; };
 		ADAC61D316E8136500CE8FBC /* arrow_right_22.png in Resources */ = {isa = PBXBuildFile; fileRef = ADAC61D116E8136500CE8FBC /* arrow_right_22.png */; };
+		ADAC61E116E87A4A00CE8FBC /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAC61E016E87A4A00CE8FBC /* EventKit.framework */; };
+		ADAC61E516E87B0800CE8FBC /* EventsFromKit.m in Sources */ = {isa = PBXBuildFile; fileRef = ADAC61E416E87B0800CE8FBC /* EventsFromKit.m */; };
 		ADE7F47D16D462B00081011D /* NSDate+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = ADE7F47C16D462B00081011D /* NSDate+TKCategory.m */; };
 		ADE7F48D16D465A10081011D /* NSDate+CalendarGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = ADE7F48C16D465A10081011D /* NSDate+CalendarGrid.m */; };
 		ADE7F4BC16D5F24A0081011D /* DateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ADE7F4BB16D5F24A0081011D /* DateHelper.m */; };
@@ -98,6 +100,9 @@
 		ADAC61C516E8114F00CE8FBC /* AppConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppConfig.h; sourceTree = "<group>"; };
 		ADAC61D016E8136500CE8FBC /* arrow_left_22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_left_22.png; sourceTree = "<group>"; };
 		ADAC61D116E8136500CE8FBC /* arrow_right_22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_right_22.png; sourceTree = "<group>"; };
+		ADAC61E016E87A4A00CE8FBC /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		ADAC61E316E87B0800CE8FBC /* EventsFromKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsFromKit.h; sourceTree = "<group>"; };
+		ADAC61E416E87B0800CE8FBC /* EventsFromKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsFromKit.m; sourceTree = "<group>"; };
 		ADE7F47B16D462B00081011D /* NSDate+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TKCategory.h"; sourceTree = "<group>"; };
 		ADE7F47C16D462B00081011D /* NSDate+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TKCategory.m"; sourceTree = "<group>"; };
 		ADE7F48B16D465A10081011D /* NSDate+CalendarGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+CalendarGrid.h"; sourceTree = "<group>"; };
@@ -111,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADAC61E116E87A4A00CE8FBC /* EventKit.framework in Frameworks */,
 				ADAC61C416E7DED600CE8FBC /* MobileCoreServices.framework in Frameworks */,
 				AD7E043B16D04991006EBF01 /* UIKit.framework in Frameworks */,
 				AD7E043D16D04991006EBF01 /* Foundation.framework in Frameworks */,
@@ -151,6 +157,7 @@
 		AD7E043916D04991006EBF01 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ADAC61E016E87A4A00CE8FBC /* EventKit.framework */,
 				ADAC61C316E7DED600CE8FBC /* MobileCoreServices.framework */,
 				AD7E043A16D04991006EBF01 /* UIKit.framework */,
 				AD7E043C16D04991006EBF01 /* Foundation.framework */,
@@ -163,6 +170,7 @@
 		AD7E044216D04991006EBF01 /* smarty */ = {
 			isa = PBXGroup;
 			children = (
+				ADAC61E216E87A9100CE8FBC /* dataModels */,
 				ADAC61C616E8119600CE8FBC /* images */,
 				ADAC61BF16E7D42F00CE8FBC /* service */,
 				ADAC61A016E7C76800CE8FBC /* externalLibs */,
@@ -267,6 +275,15 @@
 				ADAC61D116E8136500CE8FBC /* arrow_right_22.png */,
 			);
 			path = images;
+			sourceTree = "<group>";
+		};
+		ADAC61E216E87A9100CE8FBC /* dataModels */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC61E316E87B0800CE8FBC /* EventsFromKit.h */,
+				ADAC61E416E87B0800CE8FBC /* EventsFromKit.m */,
+			);
+			name = dataModels;
 			sourceTree = "<group>";
 		};
 		ADE7F47916D4624F0081011D /* categories */ = {
@@ -382,6 +399,7 @@
 				ADAC61BC16E7C7A400CE8FBC /* AFXMLRequestOperation.m in Sources */,
 				ADAC61BD16E7C7A400CE8FBC /* UIImageView+AFNetworking.m in Sources */,
 				ADAC61C216E7D4A200CE8FBC /* WeatherForecast.m in Sources */,
+				ADAC61E516E87B0800CE8FBC /* EventsFromKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
