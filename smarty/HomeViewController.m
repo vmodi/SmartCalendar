@@ -55,6 +55,9 @@ static NSString *kCellID = @"calendarGridCellID";
     [self updateWeekdayTitles];
     
     eventDataModel = [[EventsFromKit alloc] init];
+    [eventDataModel startBroadcastingModelChangedNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshView) name:EFKModelChangedNotification object:eventDataModel];
+    
 //    [eventDataModel fetchStoredEvents];
     
 //    WeatherForecast *forecast = [[WeatherForecast alloc] init];

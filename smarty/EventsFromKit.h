@@ -8,6 +8,13 @@
 
 extern NSString *const EFKModelChangedNotification;
 
+enum SCEKAuthorizationStatus {
+    SCEKAuthorizationStatusNotDetermined = 0,
+    SCEKAuthorizationStatusRestricted,
+    SCEKAuthorizationStatusDenied,
+    SCEKAuthorizationStatusAuthorized
+};
+
 @interface EventsFromKit : NSObject
 @property (strong) EKCalendar *selectedCalendar;
 
@@ -20,6 +27,10 @@ extern NSString *const EFKModelChangedNotification;
 - (NSArray*)calendars;
 - (NSArray*)calendarTitles;
 - (EKCalendar*)calendarWithTitle:(NSString*)title;
+- (void)startBroadcastingModelChangedNotifications;
+- (void)stopBroadcastingModelChangedNotifications;
+
+- (enum SCEKAuthorizationStatus)requestCalendarAccessStatus;
 
 - (void)fetchStoredEvents;
 @end

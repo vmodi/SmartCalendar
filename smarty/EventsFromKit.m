@@ -10,6 +10,7 @@ NSString *const EFKModelChangedNotification = @"EFKModelChangedNotification";
 @implementation EventsFromKit{
     EKEventStore *eventStore;
     dispatch_queue_t fetchEventsQueue;
+    Boolean broadcastChangedNotifications;
 }
 
 - (id)init {
@@ -40,8 +41,28 @@ NSString *const EFKModelChangedNotification = @"EFKModelChangedNotification";
         }
 
     }
-    
     return self;
+}
+
+- (enum SCEKAuthorizationStatus)requestCalendarAccessStatus{
+    if([[EKEventStore class] respondsToSelector:@selector(authorizationStatusForEntityType:)]){
+        return [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
+    } else {
+        return SCEKAuthorizationStatusAuthorized;
+    }
+}
+
+- (void)startBroadcastingModelChangedNotifications {
+    broadcastChangedNotifications = YES;
+    
+    // We want to listen to the EKEventStoreChangedNotification on the EKEventStore,
+    // so that we update our list of events if anything changes in the EKEventStore (such as events added or removed).
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchPokerEvents) name:EKEventStoreChangedNotification object:self.eventStore];
+}
+
+- (void)stopBroadcastingModelChangedNotifications {
+    broadcastChangedNotifications = NO;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NSArray*)calendars {
@@ -144,8 +165,6 @@ NSString *const EFKModelChangedNotification = @"EFKModelChangedNotification";
     self.eventDates = [eventDates copy];
     self.eventDateToEventsDictionary = [eventDictionary copy];
 }
-
-
 
 
 @end
