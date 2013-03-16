@@ -4,15 +4,15 @@
 
 #import "InfiniteScrollView.h"
 #import "HorizontalScrollerDateView.h"
-#import "NSDate+TKCategory.h"
 
 @interface InfiniteScrollView () {
-    NSMutableArray *visibleDates;
+    NSMutableArray *visibleDateViews;
     NSDate         *startDate;
     NSMutableArray *reuseDateCellsStorage;
+    id<DateScrollerDelegate> dateScrollerDelegate;
 }
 
-- (void)tileLabelsFromMinX:(CGFloat)minimumVisibleX toMaxX:(CGFloat)maximumVisibleX;
+- (void)tileDatesFromMinX:(CGFloat)minimumVisibleX toMaxX:(CGFloat)maximumVisibleX;
 
 @end
 
@@ -23,7 +23,7 @@
     if ((self = [super initWithCoder:aDecoder])) {
         self.contentSize = CGSizeMake(5000, self.frame.size.height);
         
-        visibleDates = [[NSMutableArray alloc] init];
+        visibleDateViews = [[NSMutableArray alloc] init];
         reuseDateCellsStorage = [[NSMutableArray alloc] init];
         
         [self setShowsHorizontalScrollIndicator:NO];
@@ -45,7 +45,7 @@
         self.contentOffset = CGPointMake(centerOffsetX, currentOffset.y);
         
         // move content by the same amount so it appears to stay still
-        for (UILabel *label in visibleDates) {
+        for (UILabel *label in visibleDateViews) {
             CGPoint center = label.center;
             center.x += (centerOffsetX - currentOffset.x);
             label.center = center;
@@ -69,18 +69,18 @@
     CGFloat minimumVisibleX = CGRectGetMinX(visibleBounds);
     CGFloat maximumVisibleX = CGRectGetMaxX(visibleBounds);
     
-    [self tileLabelsFromMinX:minimumVisibleX toMaxX:maximumVisibleX];
+    [self tileDatesFromMinX:minimumVisibleX toMaxX:maximumVisibleX];
 }
 
 #pragma mark - public methods
--(void) prepareScrollerWithDate:(NSDate *)date{
-    [visibleDates removeAllObjects];
+-(void) prepareScrollerWithDate:(NSDate *)date withDelegate:(id<DateScrollerDelegate>)delegate{
+    [visibleDateViews removeAllObjects];
     startDate = date;
+    dateScrollerDelegate = delegate;
     [self updateScrollView];
 }
 
-#pragma mark -
-#pragma mark Label Tiling
+#pragma mark - Date Tiling
 
 - (HorizontalScrollerDateView*) getDateView{
     HorizontalScrollerDateView *dateView;
@@ -104,23 +104,23 @@
     return dateView;
 }
 
-- (HorizontalScrollerDateView *)insertLabel {
+- (HorizontalScrollerDateView *)insertScrollerDateView {
     HorizontalScrollerDateView *dateView = [self getDateView];
     [self addSubview:dateView];
     return dateView;
 }
 
-- (CGFloat)placeNewLabelOnRight:(CGFloat)rightEdge {
-    HorizontalScrollerDateView *dateView = [self insertLabel];
+- (CGFloat)placeNewDateOnRight:(CGFloat)rightEdge {
+    HorizontalScrollerDateView *dateView = [self insertScrollerDateView];
     NSDate* dateForCell;
-    if(!visibleDates.count){
+    if(!visibleDateViews.count){
         dateForCell = startDate;
     } else {
-        dateForCell = ((HorizontalScrollerDateView *)[visibleDates lastObject]).cellDate;
+        dateForCell = ((HorizontalScrollerDateView *)[visibleDateViews lastObject]).cellDate;
         dateForCell = [dateForCell dateByAddingDays:1];
     }
     [dateView populateCellWithDate:dateForCell];
-    [visibleDates addObject:dateView]; // add rightmost label at the end of the array
+    [visibleDateViews addObject:dateView]; // add rightmost date at the end of the array
     
     CGRect frame = [dateView frame];
     frame.origin.x = rightEdge;
@@ -130,17 +130,17 @@
     return CGRectGetMaxX(frame);
 }
 
-- (CGFloat)placeNewLabelOnLeft:(CGFloat)leftEdge {
-    HorizontalScrollerDateView *dateView = [self insertLabel];
+- (CGFloat)placeNewDateOnLeft:(CGFloat)leftEdge {
+    HorizontalScrollerDateView *dateView = [self insertScrollerDateView];
     NSDate* dateForCell;
-    if(!visibleDates.count){
+    if(!visibleDateViews.count){
         dateForCell = startDate;
     } else {
-        dateForCell = ((HorizontalScrollerDateView *)[visibleDates objectAtIndex:0]).cellDate;
+        dateForCell = ((HorizontalScrollerDateView *)[visibleDateViews objectAtIndex:0]).cellDate;
         dateForCell = [dateForCell dateByAddingDays:-1];
     }
     [dateView populateCellWithDate:dateForCell];
-    [visibleDates insertObject:dateView atIndex:0]; // add leftmost label at the beginning of the array
+    [visibleDateViews insertObject:dateView atIndex:0]; // add leftmost label at the beginning of the array
     
     CGRect frame = [dateView frame];
     frame.origin.x = leftEdge - frame.size.width;
@@ -150,43 +150,52 @@
     return CGRectGetMinX(frame);
 }
 
-- (void)tileLabelsFromMinX:(CGFloat)minimumVisibleX toMaxX:(CGFloat)maximumVisibleX {
+- (void)tileDatesFromMinX:(CGFloat)minimumVisibleX toMaxX:(CGFloat)maximumVisibleX {
     // the upcoming tiling logic depends on there already being at least one label in the visibleLabels array, so
     // to kick off the tiling we need to make sure there's at least one label
-    if ([visibleDates count] == 0) {
-        [self placeNewLabelOnRight:minimumVisibleX];
+    if ([visibleDateViews count] == 0) {
+        [self placeNewDateOnRight:minimumVisibleX];
     }
     
-    // add labels that are missing on right side
-    HorizontalScrollerDateView *lastDateView = [visibleDates lastObject];
+    // add dates that are missing on right side
+    HorizontalScrollerDateView *lastDateView = [visibleDateViews lastObject];
     CGFloat rightEdge = CGRectGetMaxX([lastDateView frame]);
     while (rightEdge < maximumVisibleX) {
-        rightEdge = [self placeNewLabelOnRight:rightEdge];
+        rightEdge = [self placeNewDateOnRight:rightEdge];
     }
     
-    // add labels that are missing on left side
-    HorizontalScrollerDateView *firstDateView = [visibleDates objectAtIndex:0];
+    // add dates that are missing on left side
+    HorizontalScrollerDateView *firstDateView = [visibleDateViews objectAtIndex:0];
     CGFloat leftEdge = CGRectGetMinX([firstDateView frame]);
     while (leftEdge > minimumVisibleX) {
-        leftEdge = [self placeNewLabelOnLeft:leftEdge];
+        leftEdge = [self placeNewDateOnLeft:leftEdge];
     }
     
-    // remove labels that have fallen off right edge
-    lastDateView = [visibleDates lastObject];
+    // remove dates that have fallen off right edge
+    lastDateView = [visibleDateViews lastObject];
     while ([lastDateView frame].origin.x > maximumVisibleX) {
-//        [lastLabel removeFromSuperview];
         lastDateView.isActive = NO;
-        [visibleDates removeLastObject];
-        lastDateView = [visibleDates lastObject];
+        [visibleDateViews removeLastObject];
+        lastDateView = [visibleDateViews lastObject];
     }
     
-    // remove labels that have fallen off left edge
-    firstDateView = [visibleDates objectAtIndex:0];
+    // remove dates that have fallen off left edge
+    firstDateView = [visibleDateViews objectAtIndex:0];
     while (CGRectGetMaxX([firstDateView frame]) < minimumVisibleX) {
-//        [firstDateView removeFromSuperview];
         firstDateView.isActive = NO;
-        [visibleDates removeObjectAtIndex:0];
-        firstDateView = [visibleDates objectAtIndex:0];
+        [visibleDateViews removeObjectAtIndex:0];
+        firstDateView = [visibleDateViews objectAtIndex:0];
+    }
+    
+    NSDate *dateInCenter = ((HorizontalScrollerDateView*)[visibleDateViews objectAtIndex:visibleDateViews.count/2]).cellDate;
+    if (dateInCenter) {
+    
+    TKDateInformation centerDateInfo = [dateInCenter dateInformation];
+        if(centerDateInfo.day == 1){
+            if([dateScrollerDelegate respondsToSelector:@selector(monthChangedWithDateInfo:)]){
+                [dateScrollerDelegate monthChangedWithDateInfo:dateInCenter];
+            }
+        }
     }
 }
 

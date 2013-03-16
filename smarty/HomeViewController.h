@@ -9,7 +9,7 @@
 #import "InfiniteScrollView.h"
 
 
-@interface HomeViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HomeViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, DateScrollerDelegate>
 @property (strong, nonatomic) IBOutlet UICollectionView *monthGridView;
 @property (strong, nonatomic) IBOutlet UIButton *monthGridTitle;
 

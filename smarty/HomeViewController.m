@@ -158,7 +158,7 @@ static NSString *kCellID = @"calendarGridCellID";
         isCollectionViewInWeekMode = YES;
 
         NSDate* userSelectedDate = [(NSDate *)[self.datesArray objectAtIndex:0] dateByAddingDays:indexPath.row];
-        [self.weekInfiniteScrollView prepareScrollerWithDate:userSelectedDate];
+        [self.weekInfiniteScrollView prepareScrollerWithDate:userSelectedDate withDelegate:self];
         
         CGRect weekDaysContainerFrame = self.weekDaysContainer.frame;
         weekDaysContainerFrame.size.height = 0;
@@ -233,6 +233,16 @@ static NSString *kCellID = @"calendarGridCellID";
             self.monthRightArrow.hidden = NO;
         }];
     }
+}
+
+#pragma mark - DateScrollerDelegate methods
+-(void) monthChangedWithDateInfo:(NSDate*)currentMonthDate{
+    [self.monthGridTitle setTitle:[monthYearDateFormatter stringFromDate:currentMonthDate] forState:UIControlStateNormal];
+}
+
+#pragma mark - notification listener
+-(void) refreshView{
+    
 }
 
 #pragma mark - debug helper methods
