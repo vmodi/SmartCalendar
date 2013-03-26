@@ -55,9 +55,9 @@ static NSString *kCellID = @"calendarGridCellID";
     [self updateWeekdayTitles];
     
     eventDataModel = [[EventsFromKit alloc] init];
-    [eventDataModel startBroadcastingModelChangedNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshView) name:EFKModelChangedNotification object:eventDataModel];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getEvents) name:EKEventStoreAccessGrantedNotification object:eventDataModel];
+    [eventDataModel startBroadcastingModelChangedNotifications];
 //    [eventDataModel fetchStoredEvents];
     
 //    WeatherForecast *forecast = [[WeatherForecast alloc] init];
@@ -169,6 +169,12 @@ static NSString *kCellID = @"calendarGridCellID";
         CGRect infiniteScrollViewFrame= self.weekInfiniteScrollView.frame;
         infiniteScrollViewFrame.origin = weekDaysContainerFrame.origin;
         
+        CGRect eventsTableViewFrame= self.eventsTableView.frame;
+        eventsTableViewFrame.origin.y
+        = infiniteScrollViewFrame.origin.y + infiniteScrollViewFrame.size.height;
+        
+        eventsTableViewFrame.size.height = [UIScreen mainScreen].bounds.size.height - eventsTableViewFrame.origin.y;
+        
         [UIView transitionWithView:collectionView duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
             collectionView.frame = collectionViewFrame;
             
@@ -185,7 +191,13 @@ static NSString *kCellID = @"calendarGridCellID";
             self.weekInfiniteScrollView.frame = infiniteScrollViewFrame;
             
         } completion:^(BOOL finished) {}];
-        self.monthGridTitle.userInteractionEnabled = YES;        
+        [UIView transitionWithView:self.eventsTableView duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            self.eventsTableView.hidden = NO;
+            self.eventsTableView.frame = eventsTableViewFrame;
+            
+        } completion:^(BOOL finished) {
+        }];
+        self.monthGridTitle.userInteractionEnabled = YES;
     }
 }
 
@@ -241,9 +253,15 @@ static NSString *kCellID = @"calendarGridCellID";
 }
 
 #pragma mark - notification listener
+-(void) getEvents{
+    [eventDataModel fetchStoredEvents];
+}
+
 -(void) refreshView{
     
 }
+
+
 
 #pragma mark - debug helper methods
 -(void) printSize:(CGSize)viewSize{

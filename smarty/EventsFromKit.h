@@ -7,6 +7,7 @@
 #import <EventKit/EventKit.h>
 
 extern NSString *const EFKModelChangedNotification;
+extern NSString *const EKEventStoreAccessGrantedNotification;
 
 enum SCEKAuthorizationStatus {
     SCEKAuthorizationStatusNotDetermined = 0,

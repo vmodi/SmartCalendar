@@ -19,7 +19,7 @@
 @property (strong, nonatomic) IBOutlet UIView *weekDaysContainer;
 @property (strong, nonatomic) IBOutlet UIButton *monthRightArrow;
 @property (strong, nonatomic) IBOutlet UIButton *monthLeftArrow;
-
+@property (strong, nonatomic) IBOutlet UITableView *eventsTableView;
 
 - (IBAction)loadPreviousDates:(id)sender;
 - (IBAction)loadNextDates:(id)sender;

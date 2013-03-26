@@ -7,6 +7,8 @@
 #import "EventsFromKit.h"
 
 NSString *const EFKModelChangedNotification = @"EFKModelChangedNotification";
+NSString *const EKEventStoreAccessGrantedNotification = @"EKEventStoreAccessGrantedNotification";
+
 @implementation EventsFromKit{
     EKEventStore *eventStore;
     dispatch_queue_t fetchEventsQueue;
@@ -32,7 +34,10 @@ NSString *const EFKModelChangedNotification = @"EFKModelChangedNotification";
                     
                     // Use GCD so our UI doesn't block while we fetch events
                     fetchEventsQueue = dispatch_queue_create("fetchEventsQueue", DISPATCH_QUEUE_SERIAL);
-                    [self fetchStoredEvents];
+                    
+                    dispatch_async(dispatch_get_main_queue(),^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:EKEventStoreAccessGrantedNotification object:self];
+                    });
                 }else
                 {
                     //----- codes here when user NOT allow your app to access the calendar.
