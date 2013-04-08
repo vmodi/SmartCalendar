@@ -6,7 +6,12 @@
 //
 
 #import "AppDelegate.h"
+#import "EventsListViewController.h"
 
+
+@interface AppDelegate ()
+    @property (strong, nonatomic) EventsListViewController *eventsViewController;
+@end
 
 @implementation AppDelegate
 
@@ -18,10 +23,12 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-     self.homeViewController = [[HomeViewController alloc] init];
+//     self.homeViewController = [[HomeViewController alloc] init];
+//    
+//    [self.window setRootViewController:self.homeViewController];
     
-    [self.window setRootViewController:self.homeViewController];
-
+    self.eventsViewController = [[EventsListViewController alloc] init];
+    [self.window setRootViewController:self.eventsViewController];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

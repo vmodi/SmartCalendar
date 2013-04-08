@@ -15,7 +15,7 @@
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (strong, nonatomic) HomeViewController *homeViewController;
+//@property (strong, nonatomic) HomeViewController *homeViewController;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

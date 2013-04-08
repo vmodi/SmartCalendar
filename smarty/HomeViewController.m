@@ -54,10 +54,10 @@ static NSString *kCellID = @"calendarGridCellID";
     [self prepareMonthGridForDate:[NSDate date]];
     [self updateWeekdayTitles];
     
-    eventDataModel = [[EventsFromKit alloc] init];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshView) name:EFKModelChangedNotification object:eventDataModel];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getEvents) name:EKEventStoreAccessGrantedNotification object:eventDataModel];
-    [eventDataModel startBroadcastingModelChangedNotifications];
+//    eventDataModel = [[EventsFromKit alloc] init];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshView) name:EFKModelChangedNotification object:eventDataModel];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getEvents) name:EKEventStoreAccessGrantedNotification object:eventDataModel];
+//    [eventDataModel startBroadcastingModelChangedNotifications];
 //    [eventDataModel fetchStoredEvents];
     
 //    WeatherForecast *forecast = [[WeatherForecast alloc] init];
@@ -177,6 +177,7 @@ static NSString *kCellID = @"calendarGridCellID";
         
         [UIView transitionWithView:collectionView duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
             collectionView.frame = collectionViewFrame;
+            collectionView.hidden = YES;
             
         } completion:^(BOOL finished) {}];
         [UIView transitionWithView:self.weekDaysContainer duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{

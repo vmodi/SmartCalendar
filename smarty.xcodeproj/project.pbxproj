@@ -10,6 +10,8 @@
 		AD1FD04B16E2918700334365 /* InfiniteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1FD04A16E2918700334365 /* InfiniteScrollView.m */; };
 		AD1FD04D16E2BEED00334365 /* HorizontalScrollerDateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD1FD04C16E2BEED00334365 /* HorizontalScrollerDateView.xib */; };
 		AD1FD05016E2BFB700334365 /* HorizontalScrollerDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1FD04F16E2BFB700334365 /* HorizontalScrollerDateView.m */; };
+		AD2437AD1710CDCA0043D176 /* EventsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD2437AB1710CDCA0043D176 /* EventsListViewController.m */; };
+		AD2437AE1710CDCA0043D176 /* EventsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2437AC1710CDCA0043D176 /* EventsListViewController.xib */; };
 		AD7E043B16D04991006EBF01 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E043A16D04991006EBF01 /* UIKit.framework */; };
 		AD7E043D16D04991006EBF01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E043C16D04991006EBF01 /* Foundation.framework */; };
 		AD7E043F16D04991006EBF01 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7E043E16D04991006EBF01 /* CoreGraphics.framework */; };
@@ -52,6 +54,9 @@
 		AD1FD04C16E2BEED00334365 /* HorizontalScrollerDateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HorizontalScrollerDateView.xib; sourceTree = "<group>"; };
 		AD1FD04E16E2BFB700334365 /* HorizontalScrollerDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizontalScrollerDateView.h; sourceTree = "<group>"; };
 		AD1FD04F16E2BFB700334365 /* HorizontalScrollerDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizontalScrollerDateView.m; sourceTree = "<group>"; };
+		AD2437AA1710CDCA0043D176 /* EventsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsListViewController.h; sourceTree = "<group>"; };
+		AD2437AB1710CDCA0043D176 /* EventsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsListViewController.m; sourceTree = "<group>"; };
+		AD2437AC1710CDCA0043D176 /* EventsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsListViewController.xib; sourceTree = "<group>"; };
 		AD7E043616D04991006EBF01 /* smarty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smarty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD7E043A16D04991006EBF01 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AD7E043C16D04991006EBF01 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -137,6 +142,23 @@
 			name = customViews;
 			sourceTree = "<group>";
 		};
+		AD2437A91710CD5D0043D176 /* eventsList */ = {
+			isa = PBXGroup;
+			children = (
+				AD2437AA1710CDCA0043D176 /* EventsListViewController.h */,
+				AD2437AB1710CDCA0043D176 /* EventsListViewController.m */,
+				AD2437AC1710CDCA0043D176 /* EventsListViewController.xib */,
+			);
+			name = eventsList;
+			sourceTree = "<group>";
+		};
+		AD3B0C6F170BFA7B006E70EB /* viewControls */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = viewControls;
+			sourceTree = "<group>";
+		};
 		AD7E042B16D04991006EBF01 = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +192,7 @@
 		AD7E044216D04991006EBF01 /* smarty */ = {
 			isa = PBXGroup;
 			children = (
+				AD3B0C6F170BFA7B006E70EB /* viewControls */,
 				ADAC61E216E87A9100CE8FBC /* dataModels */,
 				ADAC61C616E8119600CE8FBC /* images */,
 				ADAC61BF16E7D42F00CE8FBC /* service */,
@@ -179,6 +202,7 @@
 				ADE7F47916D4624F0081011D /* categories */,
 				AD7E048D16D35774006EBF01 /* cells */,
 				AD7E045C16D04A04006EBF01 /* home */,
+				AD2437A91710CD5D0043D176 /* eventsList */,
 				AD7E044B16D04991006EBF01 /* AppDelegate.h */,
 				AD7E044C16D04991006EBF01 /* AppDelegate.m */,
 				ADAC61C516E8114F00CE8FBC /* AppConfig.h */,
@@ -368,6 +392,7 @@
 				AD1FD04D16E2BEED00334365 /* HorizontalScrollerDateView.xib in Resources */,
 				ADAC61D216E8136500CE8FBC /* arrow_left_22.png in Resources */,
 				ADAC61D316E8136500CE8FBC /* arrow_right_22.png in Resources */,
+				AD2437AE1710CDCA0043D176 /* EventsListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,6 +425,7 @@
 				ADAC61BD16E7C7A400CE8FBC /* UIImageView+AFNetworking.m in Sources */,
 				ADAC61C216E7D4A200CE8FBC /* WeatherForecast.m in Sources */,
 				ADAC61E516E87B0800CE8FBC /* EventsFromKit.m in Sources */,
+				AD2437AD1710CDCA0043D176 /* EventsListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

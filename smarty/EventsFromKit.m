@@ -119,7 +119,7 @@ NSString *const EKEventStoreAccessGrantedNotification = @"EKEventStoreAccessGran
         // Create a predicate for our date range and the selected calendar
         NSPredicate *predicate = [eventStore predicateForEventsWithStartDate:oneDayAgo
                                                                           endDate:twoMonthsInFuture
-                                                                        calendars:@[self.selectedCalendar ]];
+                                                                        calendars:[self calendars]];
         NSArray *results = [eventStore eventsMatchingPredicate:predicate];
         
         // Filter the results by title
