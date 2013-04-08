@@ -7,9 +7,11 @@
 //
 
 #import "EventsListViewController.h"
+#import "EventsFromKit.h"
 
-@interface EventsListViewController ()
-
+@interface EventsListViewController (){
+    EventsFromKit *eventDataModel;
+}
 @end
 
 @implementation EventsListViewController
@@ -26,7 +28,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    eventDataModel = [[EventsFromKit alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshView) name:EFKModelChangedNotification object:eventDataModel];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getEvents) name:EKEventStoreAccessGrantedNotification object:eventDataModel];
+    [eventDataModel startBroadcastingModelChangedNotifications];
+    
+    [self.infiniteDateScrollView prepareScrollerWithDate:[NSDate date] withDelegate:self];
+    [self.eventsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"eventViewCell"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,4 +43,40 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - TableDataSource methods
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return eventDataModel.eventDateToEventsDictionary.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return ((NSArray*)[eventDataModel.eventDateToEventsDictionary objectForKey:[eventDataModel.eventDates objectAtIndex:section]]).count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *eventCell = [tableView dequeueReusableCellWithIdentifier:@"eventViewCell"];
+
+    
+    NSArray* eventsForDateSection = ((NSArray*)[eventDataModel.eventDateToEventsDictionary objectForKey:[eventDataModel.eventDates objectAtIndex:indexPath.section]]);
+    
+    EKEvent *event = [eventsForDateSection objectAtIndex:indexPath.row];
+    eventCell.textLabel.text = event.title;
+    eventCell.detailTextLabel.text = event.startDate.description;
+    
+    return eventCell;
+}
+
+#pragma mark - TableView Delegate methods
+
+#pragma mark - DateScrollerDelegate methods
+-(void) monthChangedWithDateInfo:(NSDate*)currentMonthDate{
+}
+
+#pragma mark - notification listener
+-(void) getEvents{
+    [eventDataModel fetchStoredEvents];
+}
+
+-(void) refreshView{
+    [self.eventsTableView reloadData];
+}
 @end
