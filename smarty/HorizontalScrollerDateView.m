@@ -7,6 +7,7 @@
 //
 
 #import "HorizontalScrollerDateView.h"
+#import "UIColorExt.h"
 
 @interface HorizontalScrollerDateView()
 @property (copy) NSDate* cellDate;
@@ -49,7 +50,14 @@ static NSDateFormatter *dateNumFormatter;
     self.cellDate = date;
     self.dayLabel.text = [dayFormatter stringFromDate:date];
     self.dateLabel.text = [dateNumFormatter stringFromDate:date];
-    
+}
+
+-(void) currentStateSelected:(Boolean)selected{
+    if(selected){
+        self.backgroundColor = [UIColor blueColor];
+    } else {
+        self.backgroundColor = [UIColor whiteColor];
+    }
 }
 
 @end

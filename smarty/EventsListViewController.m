@@ -8,6 +8,7 @@
 
 #import "EventsListViewController.h"
 #import "EventsFromKit.h"
+#import "DateHelper.h"
 
 @interface EventsListViewController (){
     EventsFromKit *eventDataModel;
@@ -65,7 +66,16 @@
     return eventCell;
 }
 
-#pragma mark - TableView Delegate methods
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    return [DateHelper getDateInMonDdYyyy:[eventDataModel.eventDates objectAtIndex:section]];
+
+}
+
+#pragma mark - UITableViewDelegate methids
+- (void)tableView:(UITableView *)tableView didEndDisplayingHeaderView:(UIView *)view forSection:(NSInteger)section{
+    [self.infiniteDateScrollView setCurrentSelectedDate:[eventDataModel.eventDates objectAtIndex:(section + 1)]];
+}
+
 
 #pragma mark - DateScrollerDelegate methods
 -(void) monthChangedWithDateInfo:(NSDate*)currentMonthDate{

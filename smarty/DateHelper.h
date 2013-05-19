@@ -12,4 +12,5 @@
 @interface DateHelper : NSObject
 +(NSArray *) getMonthGridDatesForDate:(NSDate *) currentDate;
 +(NSArray *) getWeekDatesForDate:(NSDate *) currentDate;
++(NSString *) getDateInMonDdYyyy:(NSDate *)date;
 @end

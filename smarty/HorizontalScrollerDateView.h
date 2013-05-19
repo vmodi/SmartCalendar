@@ -15,4 +15,5 @@
 @property (atomic) BOOL isActive;
 
 -(void) populateCellWithDate:(NSDate*)date;
+-(void) currentStateSelected:(Boolean)selected;
 @end

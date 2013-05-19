@@ -4,12 +4,14 @@
 
 #import "InfiniteScrollView.h"
 #import "HorizontalScrollerDateView.h"
+#import "DateHelper.h"
 
 @interface InfiniteScrollView () {
     NSMutableArray *visibleDateViews;
     NSDate         *startDate;
     NSMutableArray *reuseDateCellsStorage;
     id<DateScrollerDelegate> dateScrollerDelegate;
+    HorizontalScrollerDateView *selectedDateView;
 }
 
 - (void)tileDatesFromMinX:(CGFloat)minimumVisibleX toMaxX:(CGFloat)maximumVisibleX;
@@ -45,7 +47,7 @@
         self.contentOffset = CGPointMake(centerOffsetX, currentOffset.y);
         
         // move content by the same amount so it appears to stay still
-        for (UILabel *label in visibleDateViews) {
+        for (HorizontalScrollerDateView *label in visibleDateViews) {
             CGPoint center = label.center;
             center.x += (centerOffsetX - currentOffset.x);
             label.center = center;
@@ -78,6 +80,22 @@
     startDate = date;
     dateScrollerDelegate = delegate;
     [self updateScrollView];
+}
+
+-(void) setCurrentSelectedDate:(NSDate *)date{
+    if(selectedDateView){
+        [selectedDateView currentStateSelected:NO];
+    } 
+        NSString *selectedDateStr = [DateHelper getDateInMonDdYyyy:date];
+
+        for (HorizontalScrollerDateView *dateView in visibleDateViews) {
+            NSString *cellDateStr = [DateHelper getDateInMonDdYyyy:dateView.cellDate];
+            if ([selectedDateStr isEqualToString:cellDateStr]) {
+                selectedDateView = dateView;
+                [selectedDateView currentStateSelected:YES];
+            }
+        
+    }
 }
 
 #pragma mark - Date Tiling

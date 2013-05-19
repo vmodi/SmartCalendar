@@ -12,4 +12,7 @@
 @interface InfiniteScrollView : UIScrollView <UIScrollViewDelegate>
 
 -(void) prepareScrollerWithDate:(NSDate *)date withDelegate:(id<DateScrollerDelegate>)delegate;
+
+-(void) setCurrentSelectedDate:(NSDate *)date;
+
 @end

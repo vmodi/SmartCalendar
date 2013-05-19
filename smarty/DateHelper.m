@@ -8,6 +8,7 @@
 #import "DateHelper.h"
 
 @implementation DateHelper
+static NSDateFormatter *monthYearDateFormatter;
 
 +(NSArray *) getMonthGridDatesForDate:(NSDate *) currentDate{
     if (currentDate) {
@@ -33,6 +34,14 @@
         return [NSArray arrayWithObjects:firstDateOfWeek, lastDateOfWeek, nil];        
     }
     return nil;
+}
+
++(NSString *) getDateInMonDdYyyy:(NSDate *)date{
+    if (!monthYearDateFormatter){
+        monthYearDateFormatter = [[NSDateFormatter alloc] init];
+        [monthYearDateFormatter setDateFormat:@"MMMM dd, yyyy"];
+    }
+    return [monthYearDateFormatter stringFromDate:date];
 }
 
 @end
