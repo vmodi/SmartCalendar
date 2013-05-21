@@ -83,18 +83,32 @@
 }
 
 -(void) setCurrentSelectedDate:(NSDate *)date{
+    if (selectedDateView && [DateHelper compareDateIgnoretime:selectedDateView.cellDate withDate:date]){
+        return;
+    }
     if(selectedDateView){
         [selectedDateView currentStateSelected:NO];
+        selectedDateView = nil;
     } 
-        NSString *selectedDateStr = [DateHelper getDateInMonDdYyyy:date];
+    for (HorizontalScrollerDateView *dateView in visibleDateViews) {
+        if ([DateHelper compareDateIgnoretime:dateView.cellDate withDate:date]) {
+            selectedDateView = dateView;
+            [selectedDateView currentStateSelected:YES];
+        }
+    }
+    if(!selectedDateView){
+        HorizontalScrollerDateView *firstVisibleDateView = [visibleDateViews objectAtIndex:0];
+        HorizontalScrollerDateView *lastVisibleDateView = [visibleDateViews lastObject];
+        int updateOffsetBy = 0;
+        if ([date compare:firstVisibleDateView.cellDate] == NSOrderedAscending) {
+            int daysDiff = [DateHelper daysBetweenDate:date andDate:firstVisibleDateView.cellDate];
+            updateOffsetBy = firstVisibleDateView.bounds.size.width * (daysDiff + 2) * -1;
+        } else {
+            int daysDiff = [DateHelper daysBetweenDate:lastVisibleDateView.cellDate andDate:date];
+            updateOffsetBy = firstVisibleDateView.bounds.size.width * (daysDiff + 2);
+        }
+        [self setContentOffset:CGPointMake(self.contentOffset.x + updateOffsetBy, self.contentOffset.y) animated:YES];
 
-        for (HorizontalScrollerDateView *dateView in visibleDateViews) {
-            NSString *cellDateStr = [DateHelper getDateInMonDdYyyy:dateView.cellDate];
-            if ([selectedDateStr isEqualToString:cellDateStr]) {
-                selectedDateView = dateView;
-                [selectedDateView currentStateSelected:YES];
-            }
-        
     }
 }
 

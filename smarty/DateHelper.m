@@ -9,7 +9,7 @@
 
 @implementation DateHelper
 static NSDateFormatter *monthYearDateFormatter;
-
+static NSCalendar *calendar;
 +(NSArray *) getMonthGridDatesForDate:(NSDate *) currentDate{
     if (currentDate) {
         NSDate* firstDateOfMonth = [currentDate monthDate];
@@ -42,6 +42,35 @@ static NSDateFormatter *monthYearDateFormatter;
         [monthYearDateFormatter setDateFormat:@"MMMM dd, yyyy"];
     }
     return [monthYearDateFormatter stringFromDate:date];
+}
+
++(Boolean) compareDateIgnoretime:(NSDate*) date1 withDate:(NSDate*)date2{
+
+    calendar = [NSCalendar currentCalendar];
+    NSInteger desiredComponents = (NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
+    
+    NSDateComponents *firstComponents = [calendar components:desiredComponents fromDate:date1];
+    NSDateComponents *secondComponents = [calendar components:desiredComponents fromDate:date2];
+    
+    return (firstComponents.day == secondComponents.day && firstComponents.month == secondComponents.month && firstComponents.year == secondComponents.year);
+}
+
++ (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime
+{
+    NSDate *fromDate;
+    NSDate *toDate;
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    [calendar rangeOfUnit:NSDayCalendarUnit startDate:&fromDate
+                 interval:NULL forDate:fromDateTime];
+    [calendar rangeOfUnit:NSDayCalendarUnit startDate:&toDate
+                 interval:NULL forDate:toDateTime];
+    
+    NSDateComponents *difference = [calendar components:NSDayCalendarUnit
+                                               fromDate:fromDate toDate:toDate options:0];
+    
+    return [difference day];
 }
 
 @end

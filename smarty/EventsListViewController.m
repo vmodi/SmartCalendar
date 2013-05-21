@@ -36,6 +36,7 @@
     
     [self.infiniteDateScrollView prepareScrollerWithDate:[NSDate date] withDelegate:self];
     [self.eventsTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"eventViewCell"];
+;
 }
 
 - (void)didReceiveMemoryWarning

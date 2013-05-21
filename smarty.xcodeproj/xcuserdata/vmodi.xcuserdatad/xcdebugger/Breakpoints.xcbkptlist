@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "smarty/InfiniteScrollView.m"
-         timestampString = "390116262.962878"
+         timestampString = "390813251.032688"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "212"
-         endingLineNumber = "212"
+         startingLineNumber = "226"
+         endingLineNumber = "226"
          landmarkName = "-tileDatesFromMinX:toMaxX:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "smarty/InfiniteScrollView.m"
-         timestampString = "390116262.962878"
+         timestampString = "390813251.032688"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "211"
-         endingLineNumber = "211"
+         startingLineNumber = "225"
+         endingLineNumber = "225"
          landmarkName = "-tileDatesFromMinX:toMaxX:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "smarty/InfiniteScrollView.m"
-         timestampString = "390116262.962878"
+         timestampString = "390813251.032688"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "213"
-         endingLineNumber = "213"
+         startingLineNumber = "227"
+         endingLineNumber = "227"
          landmarkName = "-tileDatesFromMinX:toMaxX:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "smarty/EventsListViewController.m"
-         timestampString = "390091699.754679"
+         timestampString = "390691062.031083"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "49"
-         endingLineNumber = "49"
+         startingLineNumber = "50"
+         endingLineNumber = "50"
          landmarkName = "-numberOfSectionsInTableView:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -112,11 +112,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "smarty/EventsListViewController.m"
-         timestampString = "390115252.965851"
+         timestampString = "390691062.031083"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "85"
-         endingLineNumber = "85"
+         startingLineNumber = "86"
+         endingLineNumber = "86"
          landmarkName = "-getEvents"
          landmarkType = "5">
       </FileBreakpoint>
@@ -164,24 +164,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "smarty/EventsListViewController.m"
-         timestampString = "390115288.190912"
+         timestampString = "390691062.031083"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "76"
-         endingLineNumber = "76"
+         startingLineNumber = "77"
+         endingLineNumber = "77"
          landmarkName = "-tableView:didEndDisplayingHeaderView:forSection:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "Yes"
          filePath = "smarty/InfiniteScrollView.m"
-         timestampString = "390680081.363608"
+         timestampString = "390691062.031083"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "86"
-         endingLineNumber = "86"
+         startingLineNumber = "89"
+         endingLineNumber = "89"
          landmarkName = "-setCurrentSelectedDate:"
          landmarkType = "5">
          <Actions>
@@ -194,15 +194,15 @@
          </Actions>
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "Yes"
          filePath = "smarty/InfiniteScrollView.m"
-         timestampString = "390680758.683212"
+         timestampString = "390811248.120616"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "91"
-         endingLineNumber = "91"
+         startingLineNumber = "95"
+         endingLineNumber = "95"
          landmarkName = "-setCurrentSelectedDate:"
          landmarkType = "5">
          <Actions>
@@ -223,23 +223,56 @@
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
-         continueAfterRunningActions = "Yes"
+         continueAfterRunningActions = "No"
          filePath = "smarty/InfiniteScrollView.m"
-         timestampString = "390680761.254158"
+         timestampString = "390811248.120616"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "93"
-         endingLineNumber = "93"
+         startingLineNumber = "97"
+         endingLineNumber = "97"
+         landmarkName = "-setCurrentSelectedDate:"
+         landmarkType = "5">
+         <Actions>
+            <BreakpointActionProxy
+               ActionType = "Xcode.BreakpointAction.DebuggerCommand">
+               <ActionContent>
+               </ActionContent>
+            </BreakpointActionProxy>
+         </Actions>
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "smarty/InfiniteScrollView.m"
+         timestampString = "390813251.032688"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "110"
+         endingLineNumber = "110"
          landmarkName = "-setCurrentSelectedDate:"
          landmarkType = "5">
          <Actions>
             <BreakpointActionProxy
                ActionType = "Xcode.BreakpointAction.DebuggerCommand">
                <ActionContent
-                  consoleCommand = "po [NSString stringWithFormat:@&quot;cellDateStr is: %@&quot;, cellDateStr]">
+                  consoleCommand = "po foo">
                </ActionContent>
             </BreakpointActionProxy>
          </Actions>
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "smarty/InfiniteScrollView.m"
+         timestampString = "390811133.330991"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "86"
+         endingLineNumber = "86"
+         landmarkName = "-setCurrentSelectedDate:"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

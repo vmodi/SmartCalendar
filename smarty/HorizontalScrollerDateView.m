@@ -54,9 +54,9 @@ static NSDateFormatter *dateNumFormatter;
 
 -(void) currentStateSelected:(Boolean)selected{
     if(selected){
-        self.backgroundColor = [UIColor blueColor];
+        self.backgroundColor = [UIColor grey2Color];
     } else {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor grey5Color];
     }
 }
 

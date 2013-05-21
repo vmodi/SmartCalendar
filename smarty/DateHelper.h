@@ -13,4 +13,6 @@
 +(NSArray *) getMonthGridDatesForDate:(NSDate *) currentDate;
 +(NSArray *) getWeekDatesForDate:(NSDate *) currentDate;
 +(NSString *) getDateInMonDdYyyy:(NSDate *)date;
++(Boolean) compareDateIgnoretime:(NSDate*) date1 withDate:(NSDate*)date2;
++ (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime;
 @end
