@@ -73,8 +73,16 @@
 }
 
 #pragma mark - UITableViewDelegate methids
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section{
+    NSIndexPath *firstVisibleIndexPath = [[tableView indexPathsForVisibleRows] objectAtIndex:0];
+    [self.infiniteDateScrollView setCurrentSelectedDate:[eventDataModel.eventDates objectAtIndex:(firstVisibleIndexPath.section)]];
+
+}
+
 - (void)tableView:(UITableView *)tableView didEndDisplayingHeaderView:(UIView *)view forSection:(NSInteger)section{
-    [self.infiniteDateScrollView setCurrentSelectedDate:[eventDataModel.eventDates objectAtIndex:(section + 1)]];
+    
+    NSIndexPath *firstVisibleIndexPath = [[tableView indexPathsForVisibleRows] objectAtIndex:0];
+    [self.infiniteDateScrollView setCurrentSelectedDate:[eventDataModel.eventDates objectAtIndex:(firstVisibleIndexPath.section)]];
 }
 
 

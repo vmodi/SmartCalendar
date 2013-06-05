@@ -83,6 +83,7 @@
 }
 
 -(void) setCurrentSelectedDate:(NSDate *)date{
+    NSLog(@"setting selected date = %@", [date description]);
     if (selectedDateView && [DateHelper compareDateIgnoretime:selectedDateView.cellDate withDate:date]){
         return;
     }
@@ -96,19 +97,40 @@
             [selectedDateView currentStateSelected:YES];
         }
     }
-    if(!selectedDateView){
+    if(selectedDateView){
+        int selectedCellLeftEdge = selectedDateView.frame.origin.x;
+        int selectedCellRightEdge = selectedDateView.frame.origin.x + selectedDateView.frame.size.width;
+        int updateOffsetBy = 0;
+        int scrollViewRightEdge = self.contentOffset.x + self.bounds.size.width;
+        if (selectedCellLeftEdge < self.contentOffset.x) {
+            updateOffsetBy = selectedCellLeftEdge - self.contentOffset.x;
+        } else if (selectedCellRightEdge > self.contentOffset.x + self.bounds.size.width){
+            updateOffsetBy =  selectedCellRightEdge - scrollViewRightEdge;
+        }
+        if(updateOffsetBy){
+            [self setContentOffset:CGPointMake(self.contentOffset.x + updateOffsetBy, self.contentOffset.y) animated:YES];
+        }
+    } else {
         HorizontalScrollerDateView *firstVisibleDateView = [visibleDateViews objectAtIndex:0];
         HorizontalScrollerDateView *lastVisibleDateView = [visibleDateViews lastObject];
         int updateOffsetBy = 0;
         if ([date compare:firstVisibleDateView.cellDate] == NSOrderedAscending) {
             int daysDiff = [DateHelper daysBetweenDate:date andDate:firstVisibleDateView.cellDate];
-            updateOffsetBy = firstVisibleDateView.bounds.size.width * (daysDiff + 2) * -1;
+            
+            int selectedCellLeftEdge = firstVisibleDateView.frame.origin.x - (daysDiff * firstVisibleDateView.frame.size.width);
+            
+            updateOffsetBy = selectedCellLeftEdge - self.contentOffset.x;
+            
         } else {
             int daysDiff = [DateHelper daysBetweenDate:lastVisibleDateView.cellDate andDate:date];
-            updateOffsetBy = firstVisibleDateView.bounds.size.width * (daysDiff + 2);
-        }
-        [self setContentOffset:CGPointMake(self.contentOffset.x + updateOffsetBy, self.contentOffset.y) animated:YES];
+            
+            int scrollViewRightEdge = self.contentOffset.x + self.bounds.size.width;
+            int selectedCellRightEdge = lastVisibleDateView.frame.origin.x + ((daysDiff + 1) * lastVisibleDateView.frame.size.width);
+            updateOffsetBy =  selectedCellRightEdge - scrollViewRightEdge;
 
+        }
+        
+        [self setContentOffset:CGPointMake(self.contentOffset.x + updateOffsetBy, self.contentOffset.y) animated:YES];
     }
 }
 
